@@ -10,7 +10,7 @@ public class MmsApplication {
     public static void main(String[] args) {
         SpringApplication.run(MmsApplication.class, args);
 
-        System.out.println("젠킨스 Jar 파일 정상생성 확인!");
+        System.out.println("젠킨스 빌드 후 배치파일 실행");
     }
 
 }
