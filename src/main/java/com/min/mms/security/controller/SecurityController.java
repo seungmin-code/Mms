@@ -8,7 +8,7 @@ public class SecurityController {
 
     @GetMapping("/")
     public String securityMain() {
-        return "security/main";
+        return "security/securityMain";
     }
 
 }
