@@ -9,8 +9,6 @@ public class MmsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MmsApplication.class, args);
-
-        System.out.println("우분투 서버에 젠킨스 배포하고 실행");
     }
 
 }
