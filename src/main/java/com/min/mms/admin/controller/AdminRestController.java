@@ -1,8 +1,10 @@
 package com.min.mms.admin.controller;
 
 import com.min.mms.admin.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,9 @@ public class AdminRestController {
     public AdminRestController(AdminService adminService) {
         this.adminService = adminService;
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // 사용자 리스트 조회
     @GetMapping("/users")
@@ -41,6 +46,9 @@ public class AdminRestController {
     @PostMapping("/users")
     public ResponseEntity<Map<String, Object>> addUser(@RequestBody Map<String, Object> addUserParams) {
         Map<String, Object> response = new HashMap<>();
+
+        String password = passwordEncoder.encode((String)addUserParams.get("password"));
+        System.out.println(password);
 
         try {
             response.put("status", "success");
