@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정보 수정</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<script>
+    $(function() {
+        const username = 'admin'
+        const updateParams = 'user'
+
+        $.ajax({
+            url: '/admin/users/' + username,
+            method: 'PATCH',
+            contentType: 'application/json',
+            data: JSON.stringify(updateParams),
+            success: function(response) {
+                console.log('사용자 정보 수정 성공:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('사용자 정보 수정 실패:', error);
+            }
+        });
+
+        $.ajax({
+            url: '/admin/users/' + username,
+            method: 'DELETE',
+            success: function(response) {
+                console.log('사용자 삭제 성공:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('사용자 삭제 실패:', error);
+            }
+        });
+    })
+</script>
+</body>
+</html>

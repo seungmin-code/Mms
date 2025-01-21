@@ -8,7 +8,6 @@ import java.util.Map;
 @Mapper
 public interface ReservationMapper {
 
-    @Select("select res_code from reservation")
-    public Map<String, Object> checkDbConnect();
+
 
 }

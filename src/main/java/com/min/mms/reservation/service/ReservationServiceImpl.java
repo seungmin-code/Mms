@@ -15,8 +15,5 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    @Override
-    public Map<String, Object> checkDbConnect() {
-        return reservationMapper.checkDbConnect();
-    }
+
 }

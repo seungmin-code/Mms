@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정보 등록</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<script>
+    $(function() {
+      const addUserParams = {
+        user_id: 'john_doe',
+        userName: 'John Doe',
+        password: 'Jon1234'
+      };
+
+        $.ajax({
+          url: '/admin/users', // API endpoint
+          method: 'POST',
+          contentType: 'application/json',  // JSON 형식으로 데이터 전송
+          data: JSON.stringify(addUserParams), // 요청 본문에 데이터 전달
+          success: function(response) {
+            console.log('사용자 등록 성공:', response);
+          },
+          error: function(xhr, status, error) {
+            console.error('사용자 등록 실패:', error);
+          }
+        });
+    })
+</script>
+</body>
+</html>
