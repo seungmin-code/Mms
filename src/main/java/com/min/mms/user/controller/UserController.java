@@ -18,4 +18,9 @@ public class UserController {
         return "user/member_delete";
     }
 
+    @GetMapping("memberSelectPage")
+    public String memberSelectPage() {
+        return "user/member_select";
+    }
+
 }

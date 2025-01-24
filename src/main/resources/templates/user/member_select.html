@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원조회</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <script>
+        $(function() {
+            ajaxMemberSelect();
+        })
+
+        function ajaxMemberSelect() {
+            $.ajax({
+                url: '/user/users',
+                method: 'GET',
+                data: $("#searchForm").serialize(),
+                success: function(response) {
+                    createTable(response.data)
+                },
+                error: function(error) {
+                    alert("회원조회 실패");
+                }
+            })
+        }
+
+        function createTable(data) {
+            let tableHtml = "<table><thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Role</th></tr></thead><tbody>";
+
+            data.forEach(function(item) {
+                tableHtml += "<tr class='user-row' data-username='" + item.username + "'>";
+                tableHtml += `<td>${item.username}</td>`;
+                tableHtml += `<td>${item.name}</td>`;
+                tableHtml += `<td>${item.email}</td>`;
+                tableHtml += `<td>${item.role}</td>`;
+                tableHtml += "</tr>";
+            });
+
+            tableHtml += "</tbody></table>";
+
+            $('#tableContainer').html(tableHtml);
+
+            $('.user-row').on('click', function() {
+                const username = $(this).data('username');
+                openUserDetailPopup(username);
+            });
+        }
+
+        function openUserDetailPopup(username) {
+            $.ajax({
+                url: `/user/users/${username}`,
+                method: 'GET',
+                success: function(response) {
+
+                },
+                error: function(error) {
+                    alert("회원 상세 정보를 가져오는 데 실패했습니다.");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<form id="searchForm">
+    <label for="role">권한:</label>
+    <select id="role" name="role" required>
+        <option value="ALL">전체</option>
+        <option value="USER">사용자</option>
+        <option value="ADMIN">관리자</option>
+    </select>
+    <label for="name">사용자명:</label>
+    <input type="text" id="name" name="name" placeholder="사용자명을 입력하세요" required>
+    <button type="button" onclick="ajaxMemberSelect();">회원조회</button>
+</form>
+
+<div id="tableContainer"></div>
+</body>
+</html>

@@ -7,12 +7,11 @@
 
     <script>
         function ajaxMemberDelete() {
+            const username = $("#username").val();
+
           $.ajax({
-            url: '/user/users',
+            url: '/user/users/' + username,
             method: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify({username : $("#username").val()}),
-            dataType: 'json',
             success: function(response) {
               alert('회원삭제 성공');
             },
