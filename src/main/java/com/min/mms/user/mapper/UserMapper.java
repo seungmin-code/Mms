@@ -32,4 +32,10 @@ public interface UserMapper {
             "WHERE username = #{username}")
     Map<String, Object> memberDetailSelect(String username);
 
+
+    @Update("UPDATE common_user " +
+            "SET name=#{params.name}, email=#{params.email}, phone=#{params.phone}, `role`=#{params.role}, create_date=NOW(), change_date=NULL " +
+            "WHERE username=#{username};")
+    void memberUpdate(String username, Map<String, Object> params);
+
 }

@@ -1,7 +1,6 @@
 package com.min.mms.user.controller;
 
 import com.min.mms.user.model.UserCreateDTO;
-import com.min.mms.user.model.UserDeleteDTO;
 import com.min.mms.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,13 +72,16 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PatchMapping("/users/{username}")
+    public ResponseEntity<Map<String, Object>> memberUpdate(@PathVariable String username, @RequestBody Map<String, Object> params) {
+        Map<String, Object> response = new HashMap<String, Object>();
 
-
-
-
-
-
-
-
-
+        // DB의 회원 수정
+        userService.memberUpdate(username, params);
+        
+        // 회원수정 성공 시 status. message, 204 코드 반환
+        response.put("status", "success");
+        response.put("message", "회원 수정이 성공적으로 완료되었습니다");;
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

@@ -23,4 +23,9 @@ public class UserController {
         return "user/member_select";
     }
 
+    @GetMapping("memberUpdatePage")
+    public String memberUpdatePage() {
+        return "user/member_update";
+    }
+
 }
