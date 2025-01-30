@@ -1,7 +1,6 @@
-package com.min.mms.user.mapper;
+package com.min.mms.menu.admin.user.mapper;
 
-import com.min.mms.config.provider.SqlProvider;
-import com.min.mms.user.model.UserCreateDTO;
+import com.min.mms.menu.admin.user.model.UserCreateDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public interface UserMapper {
             "WHERE username = #{username}")
     void memberDelete(String username);
 
-    @SelectProvider(type = SqlProvider.class, method = "memberSelectProvider")
+    //@SelectProvider(type = SqlProvider.class, method = "memberSelectProvider")
     List<Map<String, Object>> memberSelect(Map<String, Object> params);
 
     @Select("SELECT user_num, username, password, name, email, phone, `role`, create_date, change_date " +

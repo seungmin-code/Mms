@@ -1,4 +1,4 @@
-package com.min.mms.config;
+package com.min.mms.config.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // 회원가입 중복 아이디 존재 시 400에러 발생
+    // (커스텀) 회원가입 중복 아이디 존재 시 400에러 발생
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST); // 400 Error
     }
 
-    // 요청한 사용자가 존재하지 않을때 404에러 발생
+    // (커스텀) 요청한 사용자가 존재하지 않을때 404에러 발생
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND); // 404 Error
@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // 500 Error
     }
 
-    // SQL 예외 처리 (예: 데이터베이스 연결 실패, 쿼리 오류 등)
+    // 전반적인 SQL 예외 처리 (예: 데이터베이스 연결 실패, 쿼리 오류 등)
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Map<String, Object>> handleSQLException(SQLException e) {
         Map<String, Object> response = new HashMap<>();

@@ -1,4 +1,4 @@
-package com.min.mms.user.model;
+package com.min.mms.menu.admin.user.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
-package com.min.mms.user.service;
+package com.min.mms.menu.admin.user.service;
 
-import com.min.mms.user.model.UserCreateDTO;
+import com.min.mms.menu.admin.user.model.UserCreateDTO;
 
 import java.util.List;
 import java.util.Map;

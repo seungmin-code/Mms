@@ -1,13 +1,12 @@
-package com.min.mms.user.controller;
+package com.min.mms.menu.admin.user.controller;
 
-import com.min.mms.user.model.UserCreateDTO;
-import com.min.mms.user.service.UserService;
+import com.min.mms.menu.admin.user.model.UserCreateDTO;
+import com.min.mms.menu.admin.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController

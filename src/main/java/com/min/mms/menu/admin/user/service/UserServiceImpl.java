@@ -1,9 +1,9 @@
-package com.min.mms.user.service;
+package com.min.mms.menu.admin.user.service;
 
-import com.min.mms.config.UserAlreadyExistsException;
-import com.min.mms.config.UserNotFoundException;
-import com.min.mms.user.mapper.UserMapper;
-import com.min.mms.user.model.UserCreateDTO;
+import com.min.mms.config.exception.UserAlreadyExistsException;
+import com.min.mms.config.exception.UserNotFoundException;
+import com.min.mms.menu.admin.user.mapper.UserMapper;
+import com.min.mms.menu.admin.user.model.UserCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
