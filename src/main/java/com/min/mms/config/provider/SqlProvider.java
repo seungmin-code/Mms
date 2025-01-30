@@ -1,22 +1,30 @@
 package com.min.mms.config.provider;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 
 public class SqlProvider {
 
-    public String memberSelectProvider(Map<String, Object> params) {
+    public String noticesSelectProvider(Map<String, String> params) {
         StringBuilder query = new StringBuilder(
-                "SELECT user_num, username, password, name, email, phone, `role`, create_date, change_date " +
-                        "FROM common_user WHERE 1=1");
+                "SELECT id, title, content, deleted, file_path, create_by, update_by, " +
+                        "DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at, " +
+                        "DATE_FORMAT(updated_at, '%Y-%m-%d') AS updated_at " +
+                        "FROM Mms.board_notices WHERE 1=1");
 
-        if (params.get("name") != null && !params.get("name").toString().isEmpty()) {
-            query.append(" AND name = #{name}");
-        }
+        String searchType = params.get("searchType");
+        String searchText = params.get("searchText");
 
-        if (params.get("role") != null && !params.get("role").toString().isEmpty()) {
-            String role = params.get("role").toString();
-            if ("ADMIN".equals(role) || "USER".equals(role)) {
-                query.append(" AND role = #{role}");
+        if (searchText != null && !searchText.isEmpty()) {
+            if ("all".equals(searchType)) {
+                query.append(" AND (title LIKE CONCAT('%', #{searchText}, '%')")
+                        .append(" OR create_by LIKE CONCAT('%', #{searchText}, '%')")
+                        .append(" OR content LIKE CONCAT('%', #{searchText}, '%'))");
+            } else if (searchType != null) {
+                query.append(" AND ")
+                        .append(searchType)
+                        .append(" LIKE CONCAT('%', #{searchText}, '%')");
             }
         }
 
