@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-json:3.4.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.4.1'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.4.2'
+    implementation group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '2.1.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
