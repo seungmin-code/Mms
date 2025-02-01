@@ -8,7 +8,7 @@ public class SqlProvider {
 
     public String noticesSelectProvider(Map<String, String> params) {
         StringBuilder query = new StringBuilder(
-                "SELECT id, title, content, deleted, file_path, create_by, update_by, " +
+                "SELECT id, title, content, file_path, create_by, update_by, " +
                         "DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at, " +
                         "DATE_FORMAT(updated_at, '%Y-%m-%d') AS updated_at " +
                         "FROM Mms.board_notices WHERE 1=1");
@@ -28,7 +28,11 @@ public class SqlProvider {
             }
         }
 
+        // 정렬 추가
+        query.append(" ORDER BY id DESC");
+
         return query.toString();
     }
+
 
 }

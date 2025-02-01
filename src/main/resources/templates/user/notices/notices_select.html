@@ -8,42 +8,48 @@
   <script src="/js/user/notices/notices.js"></script>
 </head>
 <body>
-<!-- 메인 콘텐츠 -->
-<main role="main" class="col-12 px-4">
-  <!-- 제목 -->
-  <h1 class="mt-4 mb-4">
-    <a href="/user/notices" class="text-decoration-none">공지사항</a>
-  </h1>
+<!-- 네비게이션 바 -->
+<div th:replace="~{common/navbar}"></div>
 
-  <!-- 검색 폼 -->
-  <form id="searchForm" class="d-flex align-items-center mb-3">
-    <!-- 검색 조건 -->
-    <label for="searchType"></label>
-    <select id="searchType" name="searchType" class="form-select form-select-sm me-2 w-auto">
-      <option value="all" selected>전체</option>
-      <option value="title">제목</option>
-      <option value="create_by">작성자</option>
-      <option value="content">내용</option>
-    </select>
+<div class="container-fluid">
+  <div class="row">
+    <!-- 왼쪽 메뉴 (사이드바) -->
+    <div class="col-md-3" th:replace="~{common/sidebar}"></div>
 
-    <!-- 검색 텍스트 입력 -->
-    <label for="searchText"></label>
-    <input id="searchText" name="searchText" class="form-control form-control-sm me-2 w-auto" placeholder="검색어를 입력하세요">
+    <!-- 메인 콘텐츠 -->
+    <main role="main" class="col-md-9 col-lg-10 px-4">
+      <h2 class="mt-4 mb-4">
+        <a href="/user/notices" class="text-decoration-none">공지사항</a>
+      </h2>
 
-    <!-- 검색 버튼 -->
-    <button type="button" class="btn btn-primary btn-sm" onclick="search(1);">검색</button>
-  </form>
+      <!-- 검색 폼을 감싸는 카드 스타일 -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <form id="searchForm" class="d-flex align-items-center">
+            <label for="searchType"></label>
+            <select id="searchType" name="searchType" class="form-select form-select-sm me-2 w-auto">
+              <option value="all" selected>전체</option>
+              <option value="title">제목</option>
+              <option value="create_by">작성자</option>
+              <option value="content">내용</option>
+            </select>
 
-  <div id="tableContainer"></div>
+            <label for="searchText"></label>
+            <input id="searchText" name="searchText" class="form-control form-control-sm me-2 w-auto" placeholder="검색어를 입력하세요">
 
-  <!-- 페이지네이션과 등록 버튼을 한 줄에 배치 -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <!-- 페이지네이션을 가운데 정렬 -->
-    <div id="pagination" class="d-flex justify-content-center flex-grow-1"></div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="search(1);">검색</button>
+          </form>
+        </div>
+      </div>
 
-    <!-- 등록 버튼을 오른쪽 끝에 배치 -->
-    <button type="button" class="btn btn-success btn-sm" onclick="location.href='/user/notices/create';">등록</button>
+      <div id="tableContainer"></div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div id="pagination" class="d-flex justify-content-center flex-grow-1"></div>
+        <button type="button" class="btn btn-success btn-sm" onclick="location.href='/user/notices/create';">등록</button>
+      </div>
+    </main>
   </div>
-</main>
+</div>
 </body>
 </html>

@@ -19,4 +19,19 @@ public class NoticesServiceImpl implements NoticesService {
     public List<Map<String, Object>> getNoticesDataList(Map<String, Object> params) {
         return noticesMapper.getNoticesDataList(params);
     }
+
+    @Override
+    public Map<String, Object> getNoticesDetail(Long id) {
+        return noticesMapper.getNoticesDetail(id);
+    }
+
+    @Override
+    public void insertNotice(Map<String, Object> params) {
+        noticesMapper.insertNotice(params);
+    }
+
+    @Override
+    public void deleteNotice(Long id) {
+        noticesMapper.deleteNotice(id);
+    }
 }

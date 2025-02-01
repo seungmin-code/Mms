@@ -7,4 +7,9 @@ public interface NoticesService {
 
     List<Map<String, Object>> getNoticesDataList(Map<String, Object> params);
 
+    Map<String, Object> getNoticesDetail(Long id);
+
+    void insertNotice(Map<String, Object> params);
+
+    void deleteNotice(Long id);
 }

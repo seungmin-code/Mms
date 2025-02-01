@@ -3,10 +3,12 @@ package com.min.mms.menu.user.notices.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.min.mms.common.CommonComponent;
+import com.min.mms.menu.admin.user.model.UserCreateDTO;
 import com.min.mms.menu.user.notices.service.NoticesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +25,6 @@ public class NoticesRestController {
         this.noticesService = noticesService;
         this.commonComponent = commonComponent;
     }
-
 
     // 공지사항 목록 조회
     @GetMapping

@@ -31,5 +31,36 @@
 
         })
     }
+
+    function createTable(columns, columnsName, data) {
+        const tableContainer = $("#tableContainer");
+        tableContainer.empty();
+
+        let tableHtml = `<table class="table table-hover"><thead><tr>`;
+
+        // columnsName을 사용하여 헤더 출력
+        columnsName.forEach(function (colName) {
+            tableHtml += `<th class='text-center' style='background-color: #F6F4F4FF'>${colName}</th>`;
+        });
+
+        tableHtml += `</tr></thead><tbody>`;
+
+        if (data.length > 0) {
+            data.forEach(function (row) {
+                tableHtml += `<tr onclick="location.href='/user/notices/${row.id}'">`;  // 클릭 시 상세보기로 이동
+                columns.forEach(function (col, index) {
+                    let className = (index === 1) ? "" : "class='text-center'";
+                    tableHtml += `<td ${className}>${row[col]}</td>`;
+                });
+                tableHtml += `</tr>`;
+            });
+        } else {
+            tableHtml += `<tr><td colspan="${columns.length}" class="text-center">데이터가 없습니다</td></tr>`;
+        }
+
+        tableHtml += `</tbody></table>`;
+
+        tableContainer.html(tableHtml);
+    }
     
 

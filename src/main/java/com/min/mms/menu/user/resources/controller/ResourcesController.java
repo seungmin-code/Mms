@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/user")
 public class ResourcesController {
     // 자료실
     @GetMapping("resources")
     public String boardResources() {
-        return "user/board/resources";
+        return "user/resources/resources_select";
     }
 }
