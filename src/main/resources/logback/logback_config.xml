@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 로그 패턴 (Spring Boot 기본 패턴 적용) -->
+    <property name="CUSTOM_LOG_PATTERN_NORMAL" value="%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) [%thread] %logger{36} - %msg%n" />
+    <!-- 로그 패턴 (시간과 메시지만 적용) -->
+    <property name="CUSTOM_LOG_PATTERN_MSG" value="%d{yyyy-MM-dd HH:mm:ss} %msg%n" />
+    <!-- 로그 패턴 (예외 스택 트레이스를 포함) -->
+    <property name="CUSTOM_LOG_PATTERN_ERROR" value="%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n%throwable{full}" />
+
+    <!-- 콘솔 로그 설정 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CUSTOM_LOG_PATTERN_NORMAL}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 콘솔 로그 파일 저장 -->
+    <appender name="CONSOLE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 롤링 정책 설정(TimeBasedRollingPolicy 날짜기준으로 롤링) -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/console/%d{yyyy-MM-dd}_console.log</fileNamePattern>
+            <!-- 용량관계로 10일까지만 보관 -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CUSTOM_LOG_PATTERN_NORMAL}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 에러 로그 설정 -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/error/%d{yyyy-MM-dd}_error.log</fileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CUSTOM_LOG_PATTERN_ERROR}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <!-- 메시지 로거 설정 -->
+    <appender name="MESSAGE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/message/%d{yyyy-MM-dd}_message.log</fileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CUSTOM_LOG_PATTERN_MSG}</pattern>
+        </encoder>
+    </appender>
+    <logger name="messageLogger" level="INFO">
+        <appender-ref ref="MESSAGE_FILE" />
+    </logger>
+
+    <!-- log4jdbc 쿼리 로그 설정 -->
+    <appender name="LOG4JDBC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/log4jdbc/%d{yyyy-MM-dd}_log4jdbc.log</fileNamePattern>
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${CUSTOM_LOG_PATTERN_MSG}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- log4jdbc 로거 설정 -->
+    <logger name="jdbc.sqlonly" level="DEBUG">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.resultset" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.statement" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.connection" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.resultsettable" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.jdbc" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.sqltiming" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+    <logger name="jdbc.audit" level="OFF">
+        <appender-ref ref="LOG4JDBC_FILE" />
+    </logger>
+
+    <!-- 루트 로거 설정 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="CONSOLE_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+</configuration>
