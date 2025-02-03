@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <!-- 공통 헤더 -->
+  <th:block th:replace="~{common/header}"></th:block>
+  <!-- 폰트 CSS -->
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 15px;
+    }
+
+    a {
+      color: black;
+    }
+
+    th {
+      border-top: 2px solid black;
+    }
+
+    table tbody tr {
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- 네비게이션 바 -->
+<div layout:fragment="navbar">
+  <th:block th:replace="~{common/navbar::navbar}"></th:block>
+</div>
+
+<!-- 사이드바 -->
+<div layout:fragment="sidebar">
+  <th:block th:replace="~{common/sidebar::sidebar}"></th:block>
+</div>
+
+<!-- 콘텐츠 영역 -->
+<div layout:fragment="content" class="container-fluid"></div>
+</body>
+</html>
