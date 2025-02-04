@@ -30,6 +30,11 @@ table tbody tr {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
+/* 사이드바 대 메뉴는 BOLD */
+.site-title {
+    font-weight: bold; /* 글씨체 Bold 적용 */
+}
+
 /* 메인 콘텐츠 스타일 */
 .main-content-menu {
     padding: 20px;
