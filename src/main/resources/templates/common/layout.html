@@ -3,40 +3,29 @@
 <head>
   <!-- 공통 헤더 -->
   <th:block th:replace="~{common/header}"></th:block>
-  <!-- 폰트 CSS -->
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 15px;
-    }
+  <!-- 공통 CSS -->
 
-    a {
-      color: black;
-    }
-
-    th {
-      border-top: 2px solid black;
-    }
-
-    table tbody tr {
-      cursor: pointer;
-    }
-
-  </style>
 </head>
 <body>
+  <!-- ✅ 네비게이션 바 -->
+  <div layout:fragment="navbar">
+    <th:block th:replace="~{common/navbar::navbar}"></th:block>
+  </div>
 
-<!-- 네비게이션 바 -->
-<div layout:fragment="navbar">
-  <th:block th:replace="~{common/navbar::navbar}"></th:block>
-</div>
+  <!-- ✅ 메인 컨테이너 -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- ✅ 사이드바 -->
+      <div layout:fragment="sidebar">
+        <th:block th:replace="~{common/sidebar::sidebar}"></th:block>
+      </div>
+    </div>
 
-<!-- 사이드바 -->
-<div layout:fragment="sidebar">
-  <th:block th:replace="~{common/sidebar::sidebar}"></th:block>
-</div>
-
-<!-- 콘텐츠 영역 -->
-<div layout:fragment="content" class="container-fluid"></div>
+    <!-- ✅ 메인 콘텐츠 영역 -->
+    <div class="col main-content">
+      <!-- ✅ 개별 페이지에서 들어갈 콘텐츠 -->
+      <div layout:fragment="content" class="container-fluid"></div>
+    </div>
+  </div>
 </body>
 </html>
