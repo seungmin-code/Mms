@@ -3,27 +3,25 @@
 <head>
   <!-- 공통 헤더 -->
   <th:block th:replace="~{common/header}"></th:block>
-  <!-- 공통 CSS -->
-
 </head>
 <body>
-  <!-- ✅ 네비게이션 바 -->
+  <!-- 네비게이션 바 -->
   <div layout:fragment="navbar">
     <th:block th:replace="~{common/navbar::navbar}"></th:block>
   </div>
 
-  <!-- ✅ 메인 컨테이너 -->
+  <!-- 메인 컨테이너 -->
   <div class="container-fluid">
     <div class="row">
-      <!-- ✅ 사이드바 -->
+      <!-- 사이드바 -->
       <div layout:fragment="sidebar">
         <th:block th:replace="~{common/sidebar::sidebar}"></th:block>
       </div>
     </div>
 
-    <!-- ✅ 메인 콘텐츠 영역 -->
-    <div class="col main-content">
-      <!-- ✅ 개별 페이지에서 들어갈 콘텐츠 -->
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="col main-content main-content-menu">
+      <!-- 개별 페이지에서 들어갈 콘텐츠 -->
       <div layout:fragment="content" class="container-fluid"></div>
     </div>
   </div>
