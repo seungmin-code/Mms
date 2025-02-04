@@ -89,19 +89,19 @@ function createPagination(pagination) {
 
 
     if (currentPage > 1) {
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="search(1)" style="margin-right: 5px;"><<</button>`;
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="search(${currentPage - 1})" style="margin-right: 5px;"><</button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(1)" style="margin-right: 5px;"><<</button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage - 1})" style="margin-right: 5px;"><</button>`;
     }
     for (let i = startPage; i <= endPage; i++) {
         if (i === currentPage) {
-            paginationHtml += `<button class="page-btn btn btn-primary btn-sm" onclick="search(${i})" style="margin-right: 5px;">${i}</button>`;
+            paginationHtml += `<button class="page-btn btn btn-primary btn-sm" onclick="searchData(${i})" style="margin-right: 5px;">${i}</button>`;
         } else {
-            paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="search(${i})" style="margin-right: 5px;">${i}</button>`;
+            paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${i})" style="margin-right: 5px;">${i}</button>`;
         }
     }
     if (currentPage < totalPages) {
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="search(${currentPage + 1})" style="margin-right: 5px;">></button>`;
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="search(${totalPages})">>></button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage + 1})" style="margin-right: 5px;">></button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${totalPages})">>></button>`;
     }
 
     paginationContainer.html(paginationHtml);
