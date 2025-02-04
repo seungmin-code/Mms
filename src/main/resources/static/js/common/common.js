@@ -2,6 +2,37 @@
  * Common.js 공통 함수 모음
  */
 
+$(function () {
+    const currentPath = window.location.pathname; // 현재 페이지 경로 가져오기
+
+    $(".nav-item").each(function () {
+        const $navItem = $(this);
+        const $parentLink = $navItem.children("a.nav-link"); // 대메뉴 링크
+        const $subMenu = $navItem.find(".collapse"); // 하위 메뉴
+
+        // 하위 메뉴 내 링크 중 현재 경로와 일치하는 것이 있는지 확인
+        const $activeSubMenuItem = $subMenu.find(`a.nav-link[href='${currentPath}']`);
+
+        if ($activeSubMenuItem.length > 0) {
+            $parentLink.addClass("active"); // 🔹 대메뉴 활성화 (음영 유지)
+            $subMenu.addClass("show"); // 🔹 하위 메뉴 펼치기
+            $activeSubMenuItem.addClass("active"); // 🔹 선택된 하위 메뉴에 bold 적용
+        }
+    });
+
+    // 메뉴 클릭 시 아이콘 회전 효과 추가
+    $(".nav-link[data-bs-toggle='collapse']").on("click", function () {
+        const $icon = $(this).find(".bi-chevron-down");
+
+        // 현재 메뉴가 열려있는지 확인
+        if ($(this).attr("aria-expanded") === "true") {
+            $icon.removeClass("rotate");
+        } else {
+            $icon.addClass("rotate");
+        }
+    });
+});
+
 /**
  * Ajax 호출 함수(기본)
  * @param url 호출 할 URL

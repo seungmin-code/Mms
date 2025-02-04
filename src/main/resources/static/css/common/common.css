@@ -83,3 +83,37 @@ table tbody tr {
 button i {
     margin-right: 5px; /* 아이콘과 텍스트 간격 */
 }
+
+/* 대메뉴(첫 번째 레벨 메뉴)만 음영 적용 */
+.nav-item > .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2); /* 배경색 */
+    border-radius: 5px;
+    color: #fff !important; /* 글자색 강조 */
+}
+
+/* 대메뉴(첫 번째 레벨)만 음영 적용 */
+.nav-item > .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color: #fff !important;
+}
+
+/* 선택된 하위 메뉴: 배경 없이 글씨 bold + 밝은 색상 */
+.collapse .nav-link.active {
+    background-color: transparent !important;
+    font-weight: bold !important;
+    color: #f8f9fa !important;
+}
+
+/* 아이콘을 제외한 텍스트 부분에만 밑줄 적용 (조금 아래로) */
+.collapse .nav-link.active span {
+    display: inline-block;  /* 밑줄을 위한 블록 요소 설정 */
+    border-bottom: 2px solid #f8f9fa; /* 밑줄 스타일 */
+    padding-bottom: 0.5px; /* 밑줄을 살짝 아래로 내리기 */
+}
+
+/* 메뉴가 열려 있을 때 아이콘 회전 */
+.rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
+}

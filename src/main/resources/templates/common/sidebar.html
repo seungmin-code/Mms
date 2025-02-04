@@ -7,12 +7,20 @@
       <!-- GIS 메뉴 -->
       <li class="nav-item mb-2">
         <a class="nav-link link-light site-title" data-bs-toggle="collapse" href="#gisMenu">
-          <i class="bi bi-map"></i> GIS <i class="bi bi-chevron-down float-end"></i>
+          <i class="bi bi-map"></i> <span>GIS</span> <i class="bi bi-chevron-down float-end"></i>
         </a>
         <div class="collapse" id="gisMenu">
           <ul class="nav flex-column ms-3">
-            <li class="nav-item"><a href="/user/gis-map" class="nav-link link-light"><i class="bi bi-globe"></i> GIS 지도</a></li>
-            <li class="nav-item"><a href="/user/gis-analysis" class="nav-link link-light"><i class="bi bi-bar-chart-line"></i> GIS 분석</a></li>
+            <li class="nav-item">
+              <a href="/user/gis-map" class="nav-link link-light">
+                <i class="bi bi-globe"></i> <span>GIS 지도</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/gis-analysis" class="nav-link link-light">
+                <i class="bi bi-bar-chart-line"></i> <span>GIS 분석</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -20,12 +28,20 @@
       <!-- 고객지원 메뉴 -->
       <li class="nav-item mb-2">
         <a class="nav-link link-light site-title" data-bs-toggle="collapse" href="#supportMenu">
-          <i class="bi bi-person-lines-fill"></i> 고객지원 <i class="bi bi-chevron-down float-end"></i>
+          <i class="bi bi-person-lines-fill"></i> <span>고객지원</span> <i class="bi bi-chevron-down float-end"></i>
         </a>
         <div class="collapse" id="supportMenu">
           <ul class="nav flex-column ms-3">
-            <li class="nav-item"><a href="/cs/notices" class="nav-link link-light"><i class="bi bi-bell"></i> 공지사항</a></li>
-            <li class="nav-item"><a href="/user/resources" class="nav-link link-light"><i class="bi bi-file-earmark"></i> 자료실</a></li>
+            <li class="nav-item">
+              <a href="/cs/notices" class="nav-link link-light">
+                <i class="bi bi-bell"></i> <span>공지사항</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/resources" class="nav-link link-light">
+                <i class="bi bi-file-earmark"></i> <span>자료실</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -33,12 +49,20 @@
       <!-- 예보 및 경보 메뉴 -->
       <li class="nav-item mb-2">
         <a class="nav-link link-light site-title" data-bs-toggle="collapse" href="#forecastMenu">
-          <i class="bi bi-cloud-sun"></i> 예보 및 경보 <i class="bi bi-chevron-down float-end"></i>
+          <i class="bi bi-cloud-sun"></i> <span>예보 및 경보</span> <i class="bi bi-chevron-down float-end"></i>
         </a>
         <div class="collapse" id="forecastMenu">
           <ul class="nav flex-column ms-3">
-            <li class="nav-item"><a href="/user/alert" class="nav-link link-light"><i class="bi bi-exclamation-triangle"></i> 대기오염경보</a></li>
-            <li class="nav-item"><a href="/user/forecast" class="nav-link link-light"><i class="bi bi-sun"></i> 초미세먼지예보</a></li>
+            <li class="nav-item">
+              <a href="/user/alert" class="nav-link link-light">
+                <i class="bi bi-exclamation-triangle"></i> <span>대기오염경보</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/forecast" class="nav-link link-light">
+                <i class="bi bi-sun"></i> <span>초미세먼지예보</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -46,12 +70,20 @@
       <!-- 관측소 정보 메뉴 -->
       <li class="nav-item mb-2">
         <a class="nav-link link-light site-title" data-bs-toggle="collapse" href="#stationInfoMenu">
-          <i class="bi bi-geo-alt"></i> 관측소 정보 <i class="bi bi-chevron-down float-end"></i>
+          <i class="bi bi-geo-alt"></i> <span>관측소 정보</span> <i class="bi bi-chevron-down float-end"></i>
         </a>
         <div class="collapse" id="stationInfoMenu">
           <ul class="nav flex-column ms-3">
-            <li class="nav-item"><a href="/station/stations" class="nav-link link-light"><i class="bi bi-building"></i> 관측소 목록</a></li>
-            <li class="nav-item"><a href="/user/station-location" class="nav-link link-light"><i class="bi bi-geo-alt"></i> 관측소 위치정보</a></li>
+            <li class="nav-item">
+              <a href="/station/stations" class="nav-link link-light">
+                <i class="bi bi-building"></i> <span>관측소 목록</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/station-location" class="nav-link link-light">
+                <i class="bi bi-geo-alt"></i> <span>관측소 위치정보</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
@@ -59,17 +91,28 @@
       <!-- 실시간 자료조회 메뉴 -->
       <li class="nav-item mb-2">
         <a class="nav-link link-light site-title" data-bs-toggle="collapse" href="#realTimeMenu">
-          <i class="bi bi-clock"></i> 실시간 자료조회 <i class="bi bi-chevron-down float-end"></i>
+          <i class="bi bi-clock"></i> <span>실시간 자료조회</span> <i class="bi bi-chevron-down float-end"></i>
         </a>
         <div class="collapse" id="realTimeMenu">
           <ul class="nav flex-column ms-3">
-            <li class="nav-item"><a href="/user/province-average" class="nav-link link-light"><i class="bi bi-house-door"></i> 시도별 실시간 평균</a></li>
-            <li class="nav-item"><a href="/user/daily-average" class="nav-link link-light"><i class="bi bi-calendar-day"></i> 측정소 실시간 일평균</a></li>
-            <li class="nav-item"><a href="/user/monthly-average" class="nav-link link-light"><i class="bi bi-calendar-month"></i> 측정소 실시간 월평균</a></li>
+            <li class="nav-item">
+              <a href="/user/province-average" class="nav-link link-light">
+                <i class="bi bi-house-door"></i> <span>시도별 실시간 평균</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/daily-average" class="nav-link link-light">
+                <i class="bi bi-calendar-day"></i> <span>측정소 실시간 일평균</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/user/monthly-average" class="nav-link link-light">
+                <i class="bi bi-calendar-month"></i> <span>측정소 실시간 월평균</span>
+              </a>
+            </li>
           </ul>
         </div>
       </li>
     </ul>
   </div>
 </div>
-</html>
