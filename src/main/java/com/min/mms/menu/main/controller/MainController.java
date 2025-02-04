@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String indexMain() {
-        return "menu/main/main";
+    public String index() {
+        return "menu/main/index";
     }
 
 }
