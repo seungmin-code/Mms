@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="navbar">
-        <!-- 네비게이션 바 -->
-        <nav class="navbar navBarColor navbar-expand-lg navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">
-                    <i class="bi bi-cloud"></i> MMS
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="/admin">관리자</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="/login">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="/logout">로그아웃</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
+<div th:fragment="navbar">
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navBarColor navbar-dark w-100">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- 로고 -->
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-cloud"></i> MMS
+            </a>
+            <!-- 메뉴 (항상 가로로 보이도록 설정) -->
+            <ul class="navbar-nav d-flex flex-row">
+                <li class="nav-item mx-2"><a class="nav-link text-white" href="/admin">관리자</a></li>
+                <li class="nav-item mx-2"><a class="nav-link text-white" href="/login">로그인</a></li>
+                <li class="nav-item mx-2"><a class="nav-link text-white" href="/logout">로그아웃</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 </html>
