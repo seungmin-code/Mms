@@ -46,3 +46,40 @@ table tbody tr {
 .navBarColor {
     background: linear-gradient(45deg, #007bff, #0056b3);
 }
+
+/* 정렬 옵션 */
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 요소 간 간격 */
+    padding: 10px;
+    background-color: #f8f9fa; /* 연한 배경색 */
+    border-radius: 8px; /* 모서리 둥글게 */
+    margin-bottom: 15px; /* 테이블과 간격 */
+}
+
+.search-bar select {
+    width: 200px; /* 가로 길이 증가 */
+    padding: 5px 10px;
+    border: 1px solid #ced4da; /* 테두리 색상 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: white; /* 배경색 */
+    outline: none; /* 기본 포커스 제거 */
+    box-shadow: none; /* 파란 음영 제거 */
+}
+
+button i {
+    margin-right: 5px; /* 아이콘과 텍스트 간격 */
+}

@@ -1,9 +1,6 @@
 /**
- * 온로드 실행 함수
+ * Common.js 공통 함수 모음
  */
-$(function() {
-
-});
 
 /**
  * Ajax 호출 함수(기본)
@@ -70,7 +67,7 @@ function ajaxCall(url, type, params, success, failure) {
 }
 
 /**
- * jQuery Block UI 활용한 로딩블록 시작
+ * jQuery Block UI 표출 함수
  * @param message 로딩블록에 표시 될 메시지
  */
 function onBlockUI(message) {
@@ -91,14 +88,35 @@ function onBlockUI(message) {
             position : 'absolute',
             'z-index' : '9999999',
             opacity : .5,
-            color : '#fff'
+            color : '#fff',
+            marginLeft: '150px'
         }
     });
 }
 
 /**
- * jQuery Block UI 활용한 로딩블록 종료
+ * jQuery Block UI 중단 함수
  */
 function offBlockUI() {
     $.unblockUI();
+}
+
+/**
+ * 셀렉트박스에 옵션을 추가하는 함수
+ * @param data 옵션에 추가될 데이터리스트
+ * @param selectBoxId 추가할 셀렉트 박스 아이디
+ * @param defaultOption 기본 옵션 리스트 (기본값 : -전체-)
+ */
+function addOptions(data, selectBoxId, defaultOption) {
+    const selectBox = $(selectBoxId);
+    selectBox.empty();
+
+    if(defaultOption) {
+        selectBox.append(`<option value="">${defaultOption}</option>`);
+    }
+
+    // 서버에서 받아온 데이터로 옵션 추가
+    data.forEach(option => {
+        selectBox.append(`<option value="${option}">${option}</option>`);
+    });
 }
