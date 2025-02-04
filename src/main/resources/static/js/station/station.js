@@ -10,8 +10,13 @@ $(function() {
  * @param page 호출 할 페이지
  */
 function searchData(page) {
+    console.log("실행")
     // 페이지 사이즈는 기본 10으로 설정
-    const params = {page: page, size: 10};
+    const params = {
+        page: page,
+        size: 10,
+        category: $("#stationCategory").val()
+    };
 
     // 성공 함수
     const success = function(response) {
@@ -31,7 +36,6 @@ function searchData(page) {
 function searchCategory() {
     // 성공 함수
     const success = function(response) {
-        console.log(response);
         // 셀렉트박스 옵션 추가
         addOptions(response.data, "#stationCategory", "전체");
     }
