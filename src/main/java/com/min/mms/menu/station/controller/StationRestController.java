@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,14 +132,11 @@ public class StationRestController {
 
     @GetMapping("/excelDownload")
     public void excelDownload(@RequestParam Map<String, Object> params, HttpServletResponse response) {
-        // 엑셀 다운로드 데이터 가져오기
         List<Map<String, Object>> excelDownloadData = stationService.getStationData(params);
 
-        // XSSFWorkbook을 사용하여 .xlsx 형식의 워크북 생성
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Station Data");
+            Sheet sheet = workbook.createSheet("Sheet");
 
-            // 헤더 생성
             Row headerRow = sheet.createRow(0);
             int headerCellIndex = 0;
             for (String column : excelDownloadData.get(0).keySet()) {
@@ -145,7 +144,6 @@ public class StationRestController {
                 cell.setCellValue(column);
             }
 
-            // 데이터 행 생성
             int rowIndex = 1;
             for (Map<String, Object> data : excelDownloadData) {
                 Row row = sheet.createRow(rowIndex++);
@@ -158,9 +156,12 @@ public class StationRestController {
                 }
             }
 
-            // 엑셀 파일 응답으로 보내기
+            // 파일명에 오늘 날짜(연월일) 추가
+            String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            String fileName = today + ".xlsx";
+
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=station_data.xlsx");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
 
             try (ServletOutputStream outputStream = response.getOutputStream()) {
                 workbook.write(outputStream);
