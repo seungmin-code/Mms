@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/station/api")
 public class StationRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(StationRestController.class);
 
     private final StationService stationService;
     private final CommonComponent commonComponent;
@@ -51,6 +55,8 @@ public class StationRestController {
             int page = CommonComponent.getPage(params);
             int size = CommonComponent.getSize(params);
 
+            logger.info("Fetching station data for page {} with size {}", page, size);
+
             PageHelper.startPage(page, size);
 
             // 측정소 데이터 가져오기
@@ -62,8 +68,11 @@ public class StationRestController {
             response.put("status", "success");
             response.put("data", stationDataList);
             response.put("pagination", pagination);
+
+            logger.info("Successfully fetched {} station data", stationDataList.size());
             return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
+            logger.error("Error occurred while fetching station data: {}", e.getMessage(), e);
             // 공통 오류 응답 반환
             return commonComponent.createErrorResponse(e.getMessage());
         }
@@ -88,8 +97,11 @@ public class StationRestController {
             // 결과 반환
             response.put("status", "success");
             response.put("data", stationCategoryList);
+
+            logger.info("Successfully fetched station categories");
             return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
+            logger.error("Error occurred while fetching station categories: {}", e.getMessage(), e);
             // 공통 오류 응답 반환
             return commonComponent.createErrorResponse(e.getMessage());
         }
@@ -112,18 +124,35 @@ public class StationRestController {
             // 결과 반환
             response.put("status", "success");
             response.put("data", sidoCategoryList);
+
+            logger.info("Successfully fetched sido categories");
             return ResponseEntity.status(200).body(response);
         } catch (Exception e) {
+            logger.error("Error occurred while fetching sido categories: {}", e.getMessage(), e);
             // 공통 오류 응답 반환
             return commonComponent.createErrorResponse(e.getMessage());
         }
     }
 
+    /**
+     * 엑셀 다운로드 API.
+     * <p>
+     * 측정소 데이터를 엑셀 파일로 다운로드할 수 있습니다.
+     * </p>
+     * @param params 요청 파라미터
+     * @param response HTTP 응답 객체
+     */
     @GetMapping("/excelDownload")
     public void excelDownload(@RequestParam Map<String, Object> params, HttpServletResponse response) {
-        List<Map<String, Object>> excelDownloadData = stationService.getStationData(params);
-        commonComponent.excelDownload(excelDownloadData, response, "station");
+        try {
+            logger.info("Starting excel download with params: {}", params);
 
+            List<Map<String, Object>> excelDownloadData = stationService.getStationData(params);
+            commonComponent.excelDownload(excelDownloadData, response, "station");
+
+            logger.info("Excel download completed successfully");
+        } catch (Exception e) {
+            logger.error("Error occurred during excel download: {}", e.getMessage(), e);
+        }
     }
-
 }
