@@ -133,42 +133,8 @@ public class StationRestController {
     @GetMapping("/excelDownload")
     public void excelDownload(@RequestParam Map<String, Object> params, HttpServletResponse response) {
         List<Map<String, Object>> excelDownloadData = stationService.getStationData(params);
+        commonComponent.excelDownload(excelDownloadData, response, "station");
 
-        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Sheet");
-
-            Row headerRow = sheet.createRow(0);
-            int headerCellIndex = 0;
-            for (String column : excelDownloadData.get(0).keySet()) {
-                Cell cell = headerRow.createCell(headerCellIndex++);
-                cell.setCellValue(column);
-            }
-
-            int rowIndex = 1;
-            for (Map<String, Object> data : excelDownloadData) {
-                Row row = sheet.createRow(rowIndex++);
-                int cellIndex = 0;
-                for (Object value : data.values()) {
-                    Cell cell = row.createCell(cellIndex++);
-                    if (value != null) {
-                        cell.setCellValue(value.toString());
-                    }
-                }
-            }
-
-            // 파일명에 오늘 날짜(연월일) 추가
-            String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-            String fileName = today + ".xlsx";
-
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-
-            try (ServletOutputStream outputStream = response.getOutputStream()) {
-                workbook.write(outputStream);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
