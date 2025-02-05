@@ -15,7 +15,7 @@
         <div class="search-bar-container">
             <div class="search-bar">
                 <label>
-                    <select id="stationCategory" class="form-select"></select>
+                    <select id="category" class="form-select"></select>
                 </label>
                 <button class="btn btn-primary" onclick="searchData(1)">
                     <i class="bi bi-search"></i> 조회
@@ -35,9 +35,9 @@
                 <th class='text-center'>설치 연도</th>
             </tr>
             </thead>
-            <tbody id="stationTableBody"></tbody>
+            <tbody id="tableBody"></tbody>
         </table>
-        <div id="paginationContainer" class="d-flex justify-content-center flex-grow-1"></div>
+        <div id="pageContainer" class="d-flex justify-content-center flex-grow-1"></div>
     </div>
 </body>
 </html>

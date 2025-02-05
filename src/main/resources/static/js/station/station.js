@@ -10,12 +10,11 @@ $(function() {
  * @param page 호출 할 페이지
  */
 function searchData(page) {
-    console.log("실행")
     // 페이지 사이즈는 기본 10으로 설정
     const params = {
         page: page,
         size: 10,
-        category: $("#stationCategory").val()
+        category: $("#category").val()
     };
 
     // 성공 함수
@@ -37,7 +36,7 @@ function searchCategory() {
     // 성공 함수
     const success = function(response) {
         // 셀렉트박스 옵션 추가
-        addOptions(response.data, "#stationCategory", "전체");
+        addOptions(response.data, "#category", "전체");
     }
     // AJAX 호출
     ajaxCall("/station/api/category", "GET", "", success, "");
@@ -48,7 +47,7 @@ function searchCategory() {
  * @param data 데이터 리스트
  */
 function createTable(data) {
-    const tableBody = $("#stationTableBody");
+    const tableBody = $("#tableBody");
     tableBody.empty();
 
     if (data.length > 0) { // 데이터가 존재하면
@@ -72,41 +71,4 @@ function createTable(data) {
             `;
         tableBody.append(row);
     }
-}
-
-/**
- * 페이징 처리 함수
- * @param pagination
- */
-function createPagination(pagination) {
-    const paginationContainer = $("#paginationContainer");
-    paginationContainer.empty();
-
-    let paginationHtml = '';
-
-    const totalPages = pagination.pages;
-    const pageSize = pagination.pageSize;
-    const currentPage = pagination.pageNum;
-
-    const startPage = Math.floor((currentPage - 1) / pageSize) * pageSize + 1;
-    const endPage = Math.min(startPage + pageSize - 1, totalPages);
-
-
-    if (currentPage > 1) {
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(1)" style="margin-right: 5px;"><<</button>`;
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage - 1})" style="margin-right: 5px;"><</button>`;
-    }
-    for (let i = startPage; i <= endPage; i++) {
-        if (i === currentPage) {
-            paginationHtml += `<button class="page-btn btn btn-primary btn-sm" onclick="searchData(${i})" style="margin-right: 5px;">${i}</button>`;
-        } else {
-            paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${i})" style="margin-right: 5px;">${i}</button>`;
-        }
-    }
-    if (currentPage < totalPages) {
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage + 1})" style="margin-right: 5px;">></button>`;
-        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${totalPages})">>></button>`;
-    }
-
-    paginationContainer.html(paginationHtml);
 }

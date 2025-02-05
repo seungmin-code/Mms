@@ -157,3 +157,40 @@ function addOptions(data, selectBoxId, defaultOption) {
         selectBox.append(`<option value="${option}">${option}</option>`);
     });
 }
+
+/**
+ * 페이지헬퍼를 통해 받아온 데이터를 기반으로 페이징 처리를 진행하는 함수
+ * 조회함수는 searchData 통일
+ * 페이지 DIV 아이디는 pageContainer 통일
+ * @param pagination 페이징 처리를 위한 정보를 담은 파라미터
+ */
+function createPagination(pagination) {
+    const pageContainer = $("#pageContainer");
+    pageContainer.empty();
+
+    if (!pagination || pagination.pages <= 1) return;
+
+    const totalPages = pagination.pages;
+    const currentPage = pagination.pageNum;
+    const pageList = pagination.navigatepageNums || [];
+
+    let paginationHtml = '';
+
+    if (currentPage > 1) {
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(1)" ${currentPage === 1 ? 'disabled' : ''} style="margin-right: 5px;"><<</button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} style="margin-right: 5px;"><</button>`;
+    }
+    pageList.forEach(page => {
+        if (page === currentPage) {
+            paginationHtml += `<button class="page-btn btn btn-primary btn-sm" onclick="searchData(${page})" style="margin-right: 5px;">${page}</button>`;
+        } else {
+            paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${page})" style="margin-right: 5px;">${page}</button>`;
+        }
+    });
+
+    if (currentPage < totalPages) {
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} style="margin-right: 5px;">></button>`;
+        paginationHtml += `<button class="page-btn btn btn-secondary btn-sm" onclick="searchData(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} style="margin-right: 5px;">>></button>`;
+    }
+    pageContainer.html(paginationHtml);
+}
