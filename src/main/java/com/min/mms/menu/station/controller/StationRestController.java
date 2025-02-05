@@ -4,12 +4,22 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.min.mms.common.CommonComponent;
 import com.min.mms.menu.station.service.StationService;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +125,48 @@ public class StationRestController {
         } catch (Exception e) {
             // 공통 오류 응답 반환
             return commonComponent.createErrorResponse(e.getMessage());
+        }
+    }
+
+    @GetMapping("/excelDownload")
+    public void excelDownload(@RequestParam Map<String, Object> params, HttpServletResponse response) {
+        // 엑셀 다운로드 데이터 가져오기
+        List<Map<String, Object>> excelDownloadData = stationService.getStationData(params);
+
+        // XSSFWorkbook을 사용하여 .xlsx 형식의 워크북 생성
+        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Station Data");
+
+            // 헤더 생성
+            Row headerRow = sheet.createRow(0);
+            int headerCellIndex = 0;
+            for (String column : excelDownloadData.get(0).keySet()) {
+                Cell cell = headerRow.createCell(headerCellIndex++);
+                cell.setCellValue(column);
+            }
+
+            // 데이터 행 생성
+            int rowIndex = 1;
+            for (Map<String, Object> data : excelDownloadData) {
+                Row row = sheet.createRow(rowIndex++);
+                int cellIndex = 0;
+                for (Object value : data.values()) {
+                    Cell cell = row.createCell(cellIndex++);
+                    if (value != null) {
+                        cell.setCellValue(value.toString());
+                    }
+                }
+            }
+
+            // 엑셀 파일 응답으로 보내기
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=station_data.xlsx");
+
+            try (ServletOutputStream outputStream = response.getOutputStream()) {
+                workbook.write(outputStream);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

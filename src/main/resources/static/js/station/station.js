@@ -97,6 +97,15 @@ function searchCategory() {
 }
 
 /**
+ * 엑셀 다운로드 함수
+ */
+function excelDownload() {
+    const category = $("#category").val();
+    const sido = $("#sido").val();
+    window.location.href = `/station/api/excelDownload?size=10&category=${category}&sido=${sido}`;
+}
+
+/**
  * 시도 셀렉트박스 검색 함수
  */
 function searchSido() {

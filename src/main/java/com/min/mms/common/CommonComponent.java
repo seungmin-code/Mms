@@ -2,6 +2,7 @@ package com.min.mms.common;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -55,6 +56,7 @@ public class CommonComponent {
     public static int getSize(Map<String, Object> params) {
         return params.get("size") == null ? 10 : Integer.parseInt(params.get("size").toString());
     }
+
 
 }
 
