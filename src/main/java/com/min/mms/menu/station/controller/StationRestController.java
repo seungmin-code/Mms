@@ -21,7 +21,6 @@ import java.util.Map;
  * 페이징 처리를 지원하며, 공통 오류 응답을 활용하여 예외를 일관되게 처리합니다.
  * </p>
  */
-
 @RestController
 @RequestMapping("/station/api")
 public class StationRestController {
@@ -43,7 +42,6 @@ public class StationRestController {
      * @param params 요청 파라미터 (페이징에 필요한 page, size 포함)
      * @return 페이징 처리된 측정소 데이터 및 페이징 정보가 포함된 응답
      */
-
     @GetMapping("/data")
     public ResponseEntity<Map<String, Object>> getStationData(@RequestParam Map<String, Object> params) {
         try {
@@ -77,7 +75,6 @@ public class StationRestController {
      * </p>
      * @return 측정소 카테고리 목록이 포함된 응답
      */
-
     @GetMapping("/category")
     public ResponseEntity<Map<String, Object>> getStationCategory() {
         try {
