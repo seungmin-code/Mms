@@ -11,7 +11,6 @@ import java.util.Map;
 
 /**
  * 공통 기능을 제공하는 컴포넌트 클래스.
- *
  * 애플리케이션에서 자주 사용하는 기능을 모아놓은 유틸리티 클래스입니다.
  * 오류 응답 생성, 페이징 파라미터 처리 등의 기능을 제공합니다.
  */
@@ -56,5 +55,6 @@ public class CommonComponent {
     public static int getSize(Map<String, Object> params) {
         return params.get("size") == null ? 10 : Integer.parseInt(params.get("size").toString());
     }
+
 }
 

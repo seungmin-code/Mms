@@ -159,6 +159,30 @@ function addOptions(data, selectBoxId, defaultOption) {
 }
 
 /**
+ * 셀렉트박스에 옵션을 추가하는 함수
+ * @param data 옵션에 추가될 데이터리스트 (List<Map<String, Object>> 형태)
+ * @param selectBoxId 추가할 셀렉트 박스 아이디
+ * @param defaultOption 기본 옵션 리스트 (기본값 : -전체-)
+ * @param valueKey 옵션 값으로 사용할 key (예: 'id')
+ * @param textKey 옵션 텍스트로 사용할 key (예: 'name')
+ */
+function multiAddOptions(data, selectBoxId, defaultOption, valueKey, textKey) {
+    const selectBox = $(selectBoxId);
+    selectBox.empty();
+
+    if (defaultOption) {
+        selectBox.append(`<option value="">${defaultOption}</option>`);
+    }
+
+    // 서버에서 받아온 데이터로 옵션 추가
+    data.forEach(item => {
+        const value = item[valueKey];
+        const text = item[textKey];
+        selectBox.append(`<option value="${value}">${text}</option>`);
+    });
+}
+
+/**
  * 페이지헬퍼를 통해 받아온 데이터를 기반으로 페이징 처리를 진행하는 함수
  * 조회함수는 searchData 통일
  * 페이지 DIV 아이디는 pageContainer 통일

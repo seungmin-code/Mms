@@ -94,4 +94,28 @@ public class StationRestController {
         }
     }
 
+    /**
+     * 시도 목록을 반환하는 API.
+     * <p>
+     * 시도 데이터를 반환합니다.
+     * </p>
+     * @return 시도 목록이 포함된 응답
+     */
+    @GetMapping("/sidoCategory")
+    public ResponseEntity<Map<String, Object>> getSidoCategory() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            // 시도 데이터 가져오기
+            List<String> sidoCategoryList = stationService.getSidoCategory();
+
+            // 결과 반환
+            response.put("status", "success");
+            response.put("data", sidoCategoryList);
+            return ResponseEntity.status(200).body(response);
+        } catch (Exception e) {
+            // 공통 오류 응답 반환
+            return commonComponent.createErrorResponse(e.getMessage());
+        }
+    }
+
 }

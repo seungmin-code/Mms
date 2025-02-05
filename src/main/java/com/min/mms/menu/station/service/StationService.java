@@ -9,4 +9,6 @@ public interface StationService {
 
     List<String> getStationCategory();
 
+    List<String> getSidoCategory();
+
 }

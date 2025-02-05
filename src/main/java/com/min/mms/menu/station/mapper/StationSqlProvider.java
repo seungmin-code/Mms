@@ -10,8 +10,15 @@ public class StationSqlProvider {
             SELECT("id, station_name, addr, dm_x, dm_y, item, mang_name, `year`, created_at, updated_at");
             FROM("Mms.observation_station");
 
-            if (params.get("category") != null && params.get("category") != "") {
+            if (params.get("category") != null && !params.get("category").equals("")) {
                 WHERE("mang_name = #{category}");
+            }
+
+            if (params.get("sido") != null && !params.get("sido").equals("")) {
+                if (params.get("category") != null && !params.get("category").equals("")) {
+                    AND();
+                }
+                WHERE("LEFT(addr, 2) = #{sido}");
             }
         }}.toString();
     }

@@ -17,4 +17,8 @@ public interface StationMapper {
             "FROM Mms.observation_station")
     List<String> getStationCategory();
 
+    @Select("SELECT DISTINCT LEFT(addr, 2) AS addr " +
+            "FROM Mms.observation_station;")
+    List<String> getSidoCategory();
+
 }

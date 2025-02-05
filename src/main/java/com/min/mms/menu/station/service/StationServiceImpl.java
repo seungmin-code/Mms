@@ -24,4 +24,9 @@ public class StationServiceImpl implements StationService {
     public List<String>getStationCategory() {
         return stationMapper.getStationCategory();
     }
+
+    @Override
+    public List<String> getSidoCategory() {
+        return stationMapper.getSidoCategory();
+    }
 }
