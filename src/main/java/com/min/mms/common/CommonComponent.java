@@ -6,6 +6,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,20 +22,20 @@ import java.util.Map;
 /**
  * 공통 기능을 제공하는 컴포넌트 클래스.
  * 애플리케이션에서 자주 사용하는 기능을 모아놓은 유틸리티 클래스입니다.
- * 오류 응답 생성, 페이징 파라미터 처리 등의 기능을 제공합니다.
  */
 @Component
 public class CommonComponent {
 
+    private static final Logger logger = LoggerFactory.getLogger(CommonComponent.class);
+
     /**
      * 오류 응답을 생성하는 메서드.
-     *
-     * <p>예외 발생 시 클라이언트에게 표준화된 오류 응답을 반환합니다.</p>
      *
      * @param errorMessage 오류 메시지
      * @return HTTP 500 상태 코드와 함께 오류 메시지를 포함한 응답 객체
      */
     public ResponseEntity<Map<String, Object>> createErrorResponse(String errorMessage) {
+        logger.error("Error Response: {}", errorMessage);
         Map<String, Object> response = new HashMap<>();
         response.put("status", "error");
         response.put("message", errorMessage);
@@ -42,36 +44,43 @@ public class CommonComponent {
 
     /**
      * 요청 파라미터에서 "page" 값을 가져옵니다.
-     *
-     * <p>클라이언트가 `page` 값을 제공하지 않으면 기본값 1을 반환합니다.</p>
-     *
-     * @param params 요청 파라미터 맵
-     * @return 페이지 번호 (기본값: 1)
+     * 기본값: 1
      */
     public static int getPage(Map<String, Object> params) {
-        return params.get("page") == null ? 1 : Integer.parseInt(params.get("page").toString());
+        try {
+            return params.get("page") == null ? 1 : Integer.parseInt(params.get("page").toString());
+        } catch (NumberFormatException e) {
+            logger.warn("Invalid page parameter: {}", params.get("page"));
+            return 1;  // 기본값 반환
+        }
     }
 
     /**
      * 요청 파라미터에서 "size" 값을 가져옵니다.
-     *
-     * <p>클라이언트가 `size` 값을 제공하지 않으면 기본값 10을 반환합니다.</p>
-     *
-     * @param params 요청 파라미터 맵
-     * @return 페이지 크기 (기본값: 10)
+     * 기본값: 10
      */
     public static int getSize(Map<String, Object> params) {
-        return params.get("size") == null ? 10 : Integer.parseInt(params.get("size").toString());
+        try {
+            return params.get("size") == null ? 10 : Integer.parseInt(params.get("size").toString());
+        } catch (NumberFormatException e) {
+            logger.warn("Invalid size parameter: {}", params.get("size"));
+            return 10; // 기본값 반환
+        }
     }
 
     /**
      * 엑셀 파일을 생성하여 HTTP 응답으로 전송하는 메서드
      *
-     * @param dataList 엑셀 다운로드할 데이터 리스트. 각 데이터는 Map 형식으로, 컬럼명이 key이고 값은 그에 해당하는 데이터입니다.
-     * @param response HTTP 응답 객체. 엑셀 파일을 클라이언트로 전송하기 위해 사용됩니다.
-     * @param fileName 엑셀 파일의 기본 파일명. 파일명 뒤에 오늘 날짜(yyyyMMdd)가 붙여져서 저장됩니다.
+     * @param dataList 엑셀 다운로드할 데이터 리스트
+     * @param response HTTP 응답 객체
+     * @param fileName 엑셀 파일의 기본 파일명
      */
     public void excelDownload(List<Map<String, Object>> dataList, HttpServletResponse response, String fileName) {
+        if (dataList == null || dataList.isEmpty()) {
+            logger.error("Excel download failed: No data available.");
+            throw new IllegalArgumentException("다운로드할 데이터가 없습니다.");
+        }
+
         try (XSSFWorkbook workbook = new XSSFWorkbook()) {
             // 엑셀 시트 생성
             Sheet sheet = workbook.createSheet("Sheet");
@@ -79,7 +88,6 @@ public class CommonComponent {
             // 헤더 생성
             Row headerRow = sheet.createRow(0);
             int headerCellIndex = 0;
-            // 첫 번째 데이터 항목에서 키 값(컬럼명)을 가져와 헤더 셀에 삽입
             for (String column : dataList.get(0).keySet()) {
                 Cell cell = headerRow.createCell(headerCellIndex++);
                 cell.setCellValue(column);
@@ -90,7 +98,6 @@ public class CommonComponent {
             for (Map<String, Object> data : dataList) {
                 Row row = sheet.createRow(rowIndex++);
                 int cellIndex = 0;
-                // 각 데이터 항목의 값을 해당 셀에 삽입
                 for (Object value : data.values()) {
                     Cell cell = row.createCell(cellIndex++);
                     if (value != null) {
@@ -99,7 +106,7 @@ public class CommonComponent {
                 }
             }
 
-            // 파일명에 오늘 날짜(연월일) 추가
+            // 파일명에 오늘 날짜 추가
             String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             String finalFileName = fileName + "_" + today + ".xlsx";
 
@@ -107,15 +114,17 @@ public class CommonComponent {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + finalFileName);
 
-            // 엑셀 파일을 HTTP 응답으로 작성
+            // 엑셀 파일을 HTTP 응답으로 전송
             try (ServletOutputStream outputStream = response.getOutputStream()) {
                 workbook.write(outputStream);
+                logger.info("Excel file '{}' successfully generated and sent.", finalFileName);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.error("Excel download failed due to IO error.", e);
+            throw new RuntimeException("엑셀 파일 생성 중 오류가 발생했습니다.");
+        } catch (Exception e) {
+            logger.error("Unexpected error in excelDownload method.", e);
+            throw new RuntimeException("알 수 없는 오류가 발생했습니다.");
         }
     }
-
-
 }
-
