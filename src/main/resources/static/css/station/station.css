@@ -12,11 +12,3 @@
     border: 1px solid #ddd; /* 연한 회색 테두리 추가 */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
 }
-
-
-.menuTitle {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}

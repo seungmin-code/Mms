@@ -17,6 +17,10 @@ table tbody tr {
     cursor: pointer;
 }
 
+table thead th {
+    cursor: pointer;
+}
+
 /* 사이드바 스타일 */
 .sidebar {
     width: 250px;
@@ -125,4 +129,12 @@ button i {
 .rotate {
     transform: rotate(180deg);
     transition: transform 0.3s ease-in-out;
+}
+
+/* 소제목 타이틀 */
+.menuTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
