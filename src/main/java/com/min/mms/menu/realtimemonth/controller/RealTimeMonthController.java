@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/realTimeMonth")
 public class RealTimeMonthController {
 
-    @GetMapping("/averages")
-    public String averages(Model model) {
+    @GetMapping("/select")
+    public String realTimeMonthSelect() {
         return "menu/realtimemonth/realtime_month_select";
     }
 

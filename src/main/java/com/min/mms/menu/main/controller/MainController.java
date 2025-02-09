@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String index() {
-        return "menu/main/index";
+    public String mainSelect() {
+        return "menu/main/main_select";
     }
 
 }

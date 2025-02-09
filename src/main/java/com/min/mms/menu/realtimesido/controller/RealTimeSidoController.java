@@ -18,8 +18,8 @@ public class RealTimeSidoController {
 
     private static final Logger logger = LoggerFactory.getLogger(RealTimeSidoController.class);
 
-    @GetMapping("/averages")
-    public String realTimeSidoAverages(Model model) {
+    @GetMapping("/select")
+    public String realTimeSidoSelect(Model model) {
         return "menu/realtimesido/realtime_sido_select";
     }
 
