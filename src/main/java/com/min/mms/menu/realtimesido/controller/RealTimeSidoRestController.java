@@ -32,6 +32,13 @@ public class RealTimeSidoRestController {
         this.restTemplate = restTemplate;
     }
 
+    /**
+     * 
+     * @param itemCode 미세먼지 또는 초미세먼지 셀렉트박스 선택 값
+     * @param dataGubun 시간평균 또는 일평균 셀렉트박스 선택 값
+     * @param searchCondition  dataGubun값이 일평균일때 일주일 또는 한달단위 셀렉트박스 선택 값
+     * @return 반환 결과
+     */
     @GetMapping("/callRealTimeSidoApi")
     public ResponseEntity<Map<String, Object>> callRealTimeSidoApi(
             @RequestParam String itemCode,  // (SO2, CO, O3, NO2, PM10, PM2.5)

@@ -1,10 +1,16 @@
-
+/**
+ * 온로드 함수
+ */
 $(function() {
     selectBoxControl();
     searchData();
 })
 
 
+/**
+ * 셀렉트박스 변경 이벤트
+ * 시간단위로 선택할때 기간설정 셀렉트 박스 비활성화
+ */
 function selectBoxControl() {
     $("#dataGubun").on("change", function() {
         const dataGubunValue = $("#dataGubun").val();
@@ -19,11 +25,13 @@ function selectBoxControl() {
     })
 }
 
+/**
+ * 데이터 검색 함수 (실시간 시도 데이터 API 호출)
+ */
 function searchData() {
     const params = $("#searchForm").serialize();
 
     const success = function(response) {
-        console.log(response);
         createTable(response.items);
         createChart(response.items);
     };
@@ -32,6 +40,10 @@ function searchData() {
     ajaxCall("/realTimeSido/callRealTimeSidoApi?", "GET", params, success, "");
 }
 
+/**
+ * 테이블 생성 함수
+ * @param data 테이블 생성할 데이터 리스트
+ */
 function createTable(data) {
     const tableBody = $("#tableBody");
     tableBody.empty();
@@ -72,6 +84,10 @@ function createTable(data) {
     }
 }
 
+/**
+ * 차트생성 함수
+ * @param data 차트 생성할 데이터 리스트
+ */
 function createChart(data) {
     const chartDom = document.getElementById("chartContainer");
     const myChart = echarts.init(chartDom);
