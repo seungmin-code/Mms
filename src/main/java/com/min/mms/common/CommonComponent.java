@@ -1,5 +1,6 @@
 package com.min.mms.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,8 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -26,7 +31,15 @@ import java.util.Map;
 @Component
 public class CommonComponent {
 
+    /* API 호출을 위한 레스트템플릿 인스턴스 */
+    private final RestTemplate restTemplate;
+
+    /* 로그백 로거 */
     private static final Logger logger = LoggerFactory.getLogger(CommonComponent.class);
+
+    public CommonComponent(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     /**
      * 오류 응답을 생성하는 메서드.
@@ -125,6 +138,65 @@ public class CommonComponent {
         } catch (Exception e) {
             logger.error("Unexpected error in excelDownload method.", e);
             throw new RuntimeException("알 수 없는 오류가 발생했습니다.");
+        }
+    }
+
+    /**
+     * 주어진 파라미터를 기반으로 API를 호출하고 응답을 반환하는 메소드입니다.
+     *
+     * @param parameters API 호출에 필요한 파라미터를 담은 Map
+     * @return API 호출 결과를 담은 Map 객체
+     */
+    public JsonNode apiCall(Map<String, Object> parameters) {
+        String apiUrl = buildApiUrl(parameters);
+        logger.info("API 호출 : {}", apiUrl);
+
+        ResponseEntity<JsonNode> apiCallResponse = restTemplate.getForEntity(URI.create(apiUrl), JsonNode.class);
+        logger.info("API 응답 : {}", apiCallResponse.getBody());
+
+        return apiCallResponse.getBody();
+    }
+
+    /**
+     * API 요청을 위한 URL을 생성하는 메서드.
+     * 주어진 파라미터를 기반으로 GET 요청용 URL을 조합하여 반환한다.
+     *
+     * @param parameters API 요청에 필요한 파라미터 맵 (예: URL, 서비스 키, 쿼리 파라미터)
+     * @return 조합된 API 요청 URL (UTF-8 인코딩된 형태)
+     */
+    public String buildApiUrl(Map<String, Object> parameters) {
+        StringBuilder apiUrl = new StringBuilder();
+
+        String url = (String) parameters.get("url");
+        String serviceKey = (String) parameters.get("serviceKey");
+
+        apiUrl.append(url).append("?serviceKey=").append(serviceKey);
+
+        parameters.remove("url");
+        parameters.remove("serviceKey");
+        parameters.forEach((key, value) -> {
+            apiUrl.append("&")
+                    .append(encodeParameters(key))
+                    .append("=")
+                    .append(encodeParameters(value.toString()));
+        });
+
+        return apiUrl.toString();
+    }
+
+    /**
+     * URL 파라미터를 UTF-8로 인코딩하는 메서드.
+     * 한글 및 특수 문자가 포함된 값을 안전한 URL 형식으로 변환한다.
+     *
+     * @param param 인코딩할 문자열 값
+     * @return UTF-8로 인코딩된 문자열 (인코딩 실패 시 원본 문자열 반환)
+     */
+    public String encodeParameters(String param) {
+        try {
+            return URLEncoder.encode(param, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            logger.error("URL 인코딩 실패: {}", param, e);
+            return param;
         }
     }
 }
