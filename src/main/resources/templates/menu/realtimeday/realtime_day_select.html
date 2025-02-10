@@ -72,22 +72,46 @@
     <div class="tab-content">
         <div class="tab-pane fade show active" id="tab1">
             <div id="pm10" class="chartContainer"></div>
+            <div id="pm10-table-container"></div>
         </div>
         <div class="tab-pane fade" id="tab2">
             <div id="pm25" class="chartContainer"></div>
+            <div id="pm25-table-container"></div>
         </div>
         <div class="tab-pane fade" id="tab3">
             <div id="so2" class="chartContainer"></div>
+            <div id="so2-table-container"></div>
         </div>
         <div class="tab-pane fade" id="tab4">
             <div id="co" class="chartContainer"></div>
+            <div id="co-table-container"></div>
         </div>
         <div class="tab-pane fade" id="tab5">
             <div id="no2" class="chartContainer"></div>
+            <div id="no2-table-container"></div>
         </div>
         <div class="tab-pane fade" id="tab6">
             <div id="o3" class="chartContainer"></div>
+            <div id="o3-table-container"></div>
         </div>
+    </div>
+
+    <div class="table-responsive" id="tableContainer" style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-hover">
+            <thead class="table-light">
+            <tr>
+                <th class="align-center">측정소명</th>
+                <th class="align-center">측정일</th>
+                <th class="align-center">미세먼지(µg/m²)</th>
+                <th class="align-center">초미세먼지(µg/m²)</th>
+                <th class="align-center">아황산가스(ppm)</th>
+                <th class="align-center">일산화탄소(ppm)</th>
+                <th class="align-center">이산화질소(ppm)</th>
+                <th class="align-center">오존(ppm)</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
     </div>
 </div>
 </body>

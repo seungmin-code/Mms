@@ -69,6 +69,7 @@ function createChart(data) {
     const stationName = data[0].msrstnName;
     const categories = data.map(item => item.msurMm);
     const chartDivIds = ['pm10', 'pm25', 'so2', 'co', 'no2', 'o3'];
+    const tableDivIds = ['pm10-table-container', 'pm25-table-container', 'so2-table-container', 'co-table-container', 'no2-table-container', 'o3-table-container'];
 
     const chartData = {
         pm10: data.map(item => item.pm10Value),
@@ -88,9 +89,12 @@ function createChart(data) {
         o3  : '오존 (ppm)'
     };
 
-    chartDivIds.forEach(chartId => {
+    chartDivIds.forEach((chartId, index) => {
         const chartElement = echarts.init(document.getElementById(chartId));
         chartElement.setOption(generateChartOption(stationName, categories, chartData[chartId], chartTitle[chartId]));
+
+        // 테이블 생성
+        createTable(data, tableDivIds[index]);
     });
 }
 
@@ -128,5 +132,29 @@ function generateChartOption(stationName, categories, data, title) {
             smooth: true
         }]
     };
+}
+
+function createTable(data) {
+    const tableContainer = $("#tableBody");
+    tableContainer.empty();
+
+    let tableHTML = "";
+    data.forEach(item => {
+        tableHTML += `<tr>
+                        <td class="align-center">${item.msrstnName}</td>
+                        <td class="align-center">${item.msurMm}</td>
+                        <td class="align-center">${item.pm10Value}</td>
+                        <td class="align-center">${item.pm25Value}</td>
+                        <td class="align-center">${item.so2Value}</td>
+                        <td class="align-center">${item.coValue}</td>
+                        <td class="align-center">${item.no2Value}</td>
+                        <td class="align-center">${item.o3Value}</td>
+                    </tr>`;
+    });
+
+    tableHTML += '</tbody></table>';
+
+    // 테이블 컨테이너에 테이블 HTML 삽입
+    tableContainer.html(tableHTML);
 }
 
