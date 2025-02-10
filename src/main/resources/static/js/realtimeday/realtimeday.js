@@ -38,7 +38,7 @@ function searchSidoSelectBox() {
         addOptions(response.data, "#sido", false);
     }
 
-    ajaxCall("/common/fetchSidoData", "GET", "", success, "");
+    ajaxCall("/common/fetchSidoData", "GET", "", success, "", false);
 }
 
 function searchStationSelectBox() {
@@ -48,7 +48,7 @@ function searchStationSelectBox() {
         addOptions(response.data, "#station", false);
     }
 
-    ajaxCall("/common/fetchStationData", "GET", params, success, "");
+    ajaxCall("/common/fetchStationData", "GET", params, success, "", false);
 }
 
 function searchData() {

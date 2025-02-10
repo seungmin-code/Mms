@@ -75,13 +75,16 @@ function ajaxCallNoBlock(url, type, params, success, failure) {
  * @param params 데이터 파라미터
  * @param success 호출 성공 시 실행 할 함수
  * @param failure 호출 실패 시 실행 할 함수
+ * @param async 비동기 동기 여부
  */
-function ajaxCall(url, type, params, success, failure) {
+function ajaxCall(url, type, params, success, failure, async) {
+    async = (typeof async === "undefined") ? true : async;
+
     $.ajax({
         url: url,
         type: type,
         data: params,
-        async: false,
+        async: async,
         dataType: "json",
         success: function(response) {
             if (typeof success === "function") {
