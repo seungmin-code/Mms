@@ -20,8 +20,8 @@
         <!-- 롤링 정책 설정(TimeBasedRollingPolicy 날짜기준으로 롤링) -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logs/console/%d{yyyy-MM-dd}_console.log</fileNamePattern>
-            <!-- 용량관계로 10일까지만 보관 -->
-            <maxHistory>10</maxHistory>
+            <!-- 용량관계로 7일까지만 보관 -->
+            <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
