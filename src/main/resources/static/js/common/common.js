@@ -219,6 +219,10 @@ function createPagination(pagination) {
     pageContainer.html(paginationHtml);
 }
 
+/**
+ * flatPicker 설정 함수
+ * @param dateType ("month or day")
+ */
 function flatPickerSetting(dateType) {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0].slice(0, 7);
@@ -261,7 +265,7 @@ function flatPickerSetting(dateType) {
             ...flatpickrOptions,
             dateFormat: "Y-m-d",  // 일 단위 포맷
             mode: "single",
-            minDate: oneMonthAgoString,
+            minDate: sixMonthsAgoString,
             defaultDate: oneMonthAgoString  // 한 달 전 날짜를 디폴트로 설정
         };
 
