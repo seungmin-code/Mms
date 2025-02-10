@@ -11,7 +11,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>시도별 실시간 평균</h2>
+    <h2>시도별 미세먼지 실시간 평균</h2>
     <p>시도별 대기오염 통계 데이터를 시간단위, 일단위로 조회할 수 있는 페이지</p>
 
     <div class="search-bar-container">
@@ -19,8 +19,8 @@
             <div class="search-bar">
                 <label>
                     <select id="itemCode" name="itemCode" class="form-select">
-                        <option value="PM25">초미세먼지</option>
                         <option value="PM10">미세먼지</option>
+                        <option value="PM25">초미세먼지</option>
                     </select>
                 </label>
                 <label>
@@ -37,9 +37,6 @@
                 </label>
                 <button class="btn btn-primary" type="button" onclick="searchData()">
                     <i class="bi bi-search"></i> 조회
-                </button>
-                <button class="btn btn-success" type="button" onclick="excelDownload()">
-                    <i class="bi bi-file-earmark-excel"></i> 엑셀
                 </button>
             </div>
         </form>

@@ -1,12 +1,7 @@
-package com.min.mms.menu.realtimemonth.controller;
+package com.min.mms.menu.reatimeday.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
 import com.min.mms.common.component.CommonComponent;
-import com.min.mms.menu.realtimemonth.service.RealTimeMonthService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +14,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/realTimeMonth")
-public class RealTimeMonthRestController {
+@RequestMapping("/realTimeDay")
+public class RealTimeDayRestController {
 
     @Value("${DataPotalApiKey}")
     private String serviceKey;
 
     private final CommonComponent commonComponent;
-    private final RealTimeMonthService realTimeMonthService;
 
-    public RealTimeMonthRestController(CommonComponent commonComponent, RealTimeMonthService realTimeMonthService) {
+    public RealTimeDayRestController(CommonComponent commonComponent) {
         this.commonComponent = commonComponent;
-        this.realTimeMonthService = realTimeMonthService;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(RealTimeMonthRestController.class);
 
     @GetMapping("fetchApiCallData")
     public ResponseEntity<Map<String, Object>> fetchApiCallData(
@@ -44,13 +35,13 @@ public class RealTimeMonthRestController {
         Map<String, Object> response = new HashMap<>();
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("url", "https://apis.data.go.kr/B552584/ArpltnStatsSvc/getMsrstnAcctoRMmrg");
+        parameters.put("url", "https://apis.data.go.kr/B552584/ArpltnStatsSvc/getMsrstnAcctoRDyrg");
         parameters.put("serviceKey", serviceKey);
         parameters.put("returnType", "json");
         parameters.put("pageNo", "1");
         parameters.put("numOfRows", "100");
-        parameters.put("inqBginMm", inqBginMm);
-        parameters.put("inqEndMm", inqEndMm);
+        parameters.put("inqBginDt", inqBginMm);
+        parameters.put("inqEndDt", inqEndMm);
         parameters.put("msrstnName", msrstnName);
 
         JsonNode apiResponse = commonComponent.apiCall(parameters);
@@ -60,4 +51,5 @@ public class RealTimeMonthRestController {
         response.put("data", items);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

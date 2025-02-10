@@ -2,7 +2,7 @@ package com.min.mms.menu.station.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.min.mms.common.CommonComponent;
+import com.min.mms.common.component.CommonComponent;
 import com.min.mms.menu.station.service.StationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;

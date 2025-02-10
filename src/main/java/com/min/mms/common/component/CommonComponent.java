@@ -1,6 +1,7 @@
-package com.min.mms.common;
+package com.min.mms.common.component;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.min.mms.common.service.CommonService;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Cell;
@@ -12,6 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -28,17 +33,21 @@ import java.util.Map;
  * 공통 기능을 제공하는 컴포넌트 클래스.
  * 애플리케이션에서 자주 사용하는 기능을 모아놓은 유틸리티 클래스입니다.
  */
-@Component
+@RestController
+@RequestMapping("/common")
 public class CommonComponent {
 
     /* API 호출을 위한 레스트템플릿 인스턴스 */
     private final RestTemplate restTemplate;
 
+    private final CommonService commonService;
+
     /* 로그백 로거 */
     private static final Logger logger = LoggerFactory.getLogger(CommonComponent.class);
 
-    public CommonComponent(RestTemplate restTemplate) {
+    public CommonComponent(RestTemplate restTemplate, CommonService commonService) {
         this.restTemplate = restTemplate;
+        this.commonService = commonService;
     }
 
     /**
@@ -197,6 +206,28 @@ public class CommonComponent {
         } catch (Exception e) {
             logger.error("URL 인코딩 실패: {}", param, e);
             return param;
+        }
+    }
+
+    @GetMapping("/fetchSidoData")
+    public ResponseEntity<Map<String, Object>> fetchSidoData() {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            response.put("data", commonService.fetchSidoData());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return createErrorResponse(e.getMessage());
+        }
+    }
+
+    @GetMapping("/fetchStationData")
+    public ResponseEntity<Map<String, Object>> fetchStationData(@RequestParam("sido") String sido) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            response.put("data", commonService.fetchStationData(sido));
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return createErrorResponse(e.getMessage());
         }
     }
 }

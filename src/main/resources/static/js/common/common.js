@@ -81,7 +81,7 @@ function ajaxCall(url, type, params, success, failure) {
         url: url,
         type: type,
         data: params,
-        async: true,
+        async: false,
         dataType: "json",
         success: function(response) {
             if (typeof success === "function") {
@@ -218,3 +218,58 @@ function createPagination(pagination) {
     }
     pageContainer.html(paginationHtml);
 }
+
+function flatPickerSetting(dateType) {
+    const today = new Date();
+    const todayString = today.toISOString().split("T")[0].slice(0, 7);
+    const todayDayString = today.toISOString().split("T")[0];  // 일 단위 포맷
+
+    // 한 달 전 날짜 계산
+    const oneMonthAgo = new Date(today);
+    oneMonthAgo.setMonth(today.getMonth() - 1);  // 한 달 전으로 설정
+    const oneMonthAgoString = oneMonthAgo.toISOString().split("T")[0];
+
+    // 6개월 전 날짜 계산
+    const sixMonthsAgo = new Date(today);
+    sixMonthsAgo.setMonth(today.getMonth() - 6);  // 6개월 전으로 설정
+    const sixMonthsAgoString = sixMonthsAgo.toISOString().split("T")[0];
+
+    const flatpickrOptions = {
+        locale: "ko",
+        maxDate: "today"
+    };
+
+    if (dateType === "month") {
+        const monthOptions = {
+            ...flatpickrOptions,
+            dateFormat: "Y-m",  // 월 단위 포맷
+            mode: "single",
+            plugins: [new monthSelectPlugin({ dateFormat: "Y-m" })],
+            minDate: sixMonthsAgoString,
+            defaultDate: sixMonthsAgoString.slice(0, 7)  // 6개월 전 날짜를 디폴트로 설정
+        };
+
+        flatpickr("#startDate", monthOptions);
+        flatpickr("#endDate", {
+            ...monthOptions,
+            defaultDate: todayString
+        });
+    }
+
+    if (dateType === "day") {
+        const dayOptions = {
+            ...flatpickrOptions,
+            dateFormat: "Y-m-d",  // 일 단위 포맷
+            mode: "single",
+            minDate: oneMonthAgoString,
+            defaultDate: oneMonthAgoString  // 한 달 전 날짜를 디폴트로 설정
+        };
+
+        flatpickr("#startDate", dayOptions);
+        flatpickr("#endDate", {
+            ...dayOptions,
+            defaultDate: todayDayString
+        });
+    }
+}
+
