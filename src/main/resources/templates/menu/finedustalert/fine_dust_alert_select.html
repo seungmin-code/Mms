@@ -14,9 +14,44 @@
 <body>
 <div layout:fragment="content">
     <h2>미세먼지 경보 발령 현황</h2>
-    <p>미세먼지 경보 발령 현황 데이터를 조회할 수 있는 페이지</p>
+    <p>미세먼지 및 초미세먼지 경보 발령 현황 데이터를 조회할 수 있는 페이지</p>
+    <div class="search-bar-container">
+        <form id="searchForm">
+            <div class="search-bar">
+                <label>
+                    <select id="itemCode" class="form-select" name="itemCode">
+                        <option value="PM10">미세먼지</option>
+                        <option value="PM25">초미세먼지</option>
+                    </select>
+                </label>
+                <label>
+                    <select id="year" class="form-select" name="year"></select>
+                </label>
+                <button type="button" class="btn btn-primary" onclick="searchData()">
+                    <i class="bi bi-search"></i> 조회
+                </button>
+            </div>
+        </form>
+    </div>
 
-    
+    <div id="chartContainer" class="chartContainer" style="width: 100%; height: 500px;"></div>
+    <h3 class="menuTitle">[경보발령 현황 데이터]</h3>
+    <div class="table-responsive" id="tableContainer" style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-hover">
+            <thead class="table-light">
+            <tr>
+                <th class="align-center">번호</th>
+                <th class="align-center">지역</th>
+                <th class="align-center">권역</th>
+                <th class="align-center">항목</th>
+                <th class="align-center">경보단계</th>
+                <th class="align-center">발령시간</th>
+                <th class="align-center">해제시간</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>
