@@ -31,7 +31,7 @@ public class FineDustAlertRestController {
     }
 
     @GetMapping("fetchApiCallData")
-    public ResponseEntity<Map<String, Object>> fetchApiCallData(@RequestParam String year, @RequestParam String itemCode) {
+    public ResponseEntity<Map<String, Object>> fetchApiCallData(@RequestParam String year) {
         Map<String, Object> response = new HashMap<>();
 
         Map<String, Object> parameters = new HashMap<>();
@@ -41,7 +41,7 @@ public class FineDustAlertRestController {
         parameters.put("pageNo", "1");
         parameters.put("numOfRows", "100");
         parameters.put("year", year);
-        parameters.put("itemCode", itemCode);
+        parameters.put("itemCode", "");
 
         JsonNode apiResponse = commonComponent.apiCall(parameters);
 

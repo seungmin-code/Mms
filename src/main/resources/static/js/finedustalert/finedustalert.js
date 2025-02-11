@@ -54,16 +54,22 @@ function createChart(data) {
 
     if (data.length > 0) {
         // 월별 발령 횟수를 집계합니다.
-        const monthlyCounts = new Array(12).fill(0);
+        const monthlyCountsPM10 = new Array(12).fill(0);
+        const monthlyCountsPM25 = new Array(12).fill(0);
+
         data.forEach(item => {
             const month = new Date(item.issueDate).getMonth();
-            monthlyCounts[month]++;
+            if (item.itemCode === "PM10") {
+                monthlyCountsPM10[month]++;
+            } else if (item.itemCode === "PM25") {
+                monthlyCountsPM25[month]++;
+            }
         });
 
         // 차트 옵션을 설정합니다.
         const option = {
             title: {
-                text: '월별 미세먼지 경보 발생 횟수',
+                text: '미세먼지 및 초미세먼지 경보 발령 횟수',
                 left: 'center'
             },
             tooltip: {
@@ -76,7 +82,7 @@ function createChart(data) {
                 }
             },
             legend: {
-                data: ["발생 횟수"],
+                data: ["미세먼지", "초미세먼지"],
                 bottom: '1%'
             },
             xAxis: {
@@ -89,10 +95,22 @@ function createChart(data) {
             },
             series: [
                 {
-                    name: '발생 횟수',
-                    type: 'bar',
-                    data: monthlyCounts,
-                    smooth: true
+                    name: '미세먼지',
+                    type: 'line',
+                    data: monthlyCountsPM10,
+                    smooth: true,
+                    itemStyle: {
+                        color: '#3498DB' // 세련된 파란색
+                    }
+                },
+                {
+                    name: '초미세먼지',
+                    type: 'line',
+                    data: monthlyCountsPM25,
+                    smooth: true,
+                    itemStyle: {
+                        color: '#E74C3C' // 세련된 빨간색
+                    }
                 }
             ]
         };
@@ -107,5 +125,7 @@ function createChart(data) {
         chartDom.style.display = 'none';
     }
 }
+
+
 
 
