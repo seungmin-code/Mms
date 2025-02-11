@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>공지사항</title>
+  <script src="/js/notices/notices.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2>공지사항</h2>
+  <p>공지사항을 상세조회 할 수 있는 페이지</p>
+  <p>공지사항 ID: <span th:text="${id}"></span></p>
+</div>
+</body>
+</html>

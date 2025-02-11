@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항</title>
+  <script src="/js/notices/notices.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2>공지사항</h2>
+  <p>공지사항을 조회할 수 있는 페이지</p>
+
+  <!-- 검색조건 바 -->
+  <div class="search-bar-container">
+    <form id="searchForm">
+      <div class="search-bar">
+        <label>
+          <!-- 검색 카테고리 셀렉트박스 -->
+          <select id="category" class="form-select" name="gubun">
+            <option value="">전체</option>
+            <option value="title">제목</option>
+            <option value="create_by">작성자</option>
+            <option value="content">내용</option>
+          </select>
+        </label>
+        <!-- 검색어 박스 -->
+        <label>
+          <input type="text" id="keyword" class="form-control" name="keyword" placeholder="검색어를 입력하세요" style="width:200px;">
+        </label>
+        <!-- 조회버튼 -->
+        <button type="button" class="btn btn-primary" onclick="searchData()">
+          <i class="bi bi-search"></i> 조회
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 테이블 -->
+  <table class="table table-hover">
+    <colgroup>
+      <col style="width: 20%;">
+      <col style="width: 40%;">
+      <col style="width: 20%;">
+      <col style="width: 20%;">
+    </colgroup>
+    <thead>
+    <tr>
+      <th class='text-center'>번호</th>
+      <th class='text-center'>제목</th>
+      <th class='text-center'>작성자</th>
+      <th class='text-center'>작성일시</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <!-- 페이징과 등록버튼을 같은 선상에 배치 -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- 페이징 -->
+    <div id="pageContainer" class="d-flex justify-content-center flex-grow-1"></div>
+
+    <!-- 등록버튼 -->
+    <button type="button" class="btn btn-success btn-sm" onclick="createPage()">
+      <i class="bi bi-pencil"></i> 등록
+    </button>
+  </div>
+</div>
+</body>
+</html>

@@ -4,7 +4,19 @@
 
 $(function () {
     sidebarEvent();
+    preventionSubmit();
 });
+
+/**
+ * 엔터클릭하여 폼 제출되는 현상 방지
+ */
+function preventionSubmit() {
+    $("#searchForm").on("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+}
 
 /**
  * 사이드바 선택 시 발생 이벤트
@@ -86,6 +98,7 @@ function ajaxCall(url, type, params, success, failure, async) {
         data: params,
         async: async,
         dataType: "json",
+        contentType: "application/json",
         success: function(response) {
             if (typeof success === "function") {
                 success(response);
@@ -280,4 +293,6 @@ function flatPickerSetting(dateType) {
         });
     }
 }
+
+
 
