@@ -1,0 +1,31 @@
+.detail-title {
+    height: 50px;
+}
+
+.detail-title-text {
+    border-left: none;  /* 왼쪽 테두리 없애기 */
+    border-right: none; /* 오른쪽 테두리 없애기 */
+    border-top: #ced4da;
+    border-bottom: 2px solid #ddd !important;
+}
+
+.content-size {
+    height: 500px;
+}
+
+/* 강제로 덮어쓰는 방법 */
+th {
+    border-top: 2px solid #ddd !important;
+    border-bottom: 2px solid #ddd !important;
+    border-left: #ddd !important;
+    border-right: #ddd !important;
+    padding: 12px !important;
+    text-align: center !important;
+    background-color: #f8f9fa !important;
+    font-weight: bold !important;
+}
+
+#content {
+    padding: 10px;  /* 4방면에 10px의 공백을 추가 */
+    box-sizing: border-box;  /* padding을 요소 크기에 포함 */
+}

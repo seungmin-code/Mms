@@ -47,9 +47,7 @@ function detailPage(id) {
     window.location.href = "/notices/detail/" + id;
 }
 
-function updatePage() {
-    window.location.href = "/notices/update";
-}
+
 
 function createData() {
     const params = {title: "title", content: "content", create_by: "seungmin"};
@@ -77,10 +75,4 @@ function patchData() {
     ajaxCall("/notices/1", "PATCH", JSON.stringify(params), success, "", "");
 }
 
-function deleteData() {
-    const success = function(response) {
-        console.log(response);
-    }
 
-    ajaxCall("/notices/1", "DELETE", "", success, "", "");
-}

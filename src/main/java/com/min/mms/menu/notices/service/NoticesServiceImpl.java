@@ -1,6 +1,7 @@
 package com.min.mms.menu.notices.service;
 
 import com.min.mms.menu.notices.mapper.NoticesMapper;
+import com.min.mms.menu.notices.model.NoticesUpdateDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class NoticesServiceImpl implements NoticesService {
     }
 
     @Override
-    public void patchNotices(String id, Map<String, Object> request) {
+    public void patchNotices(String id, NoticesUpdateDTO request) {
         noticesMapper.patchNotices(id, request);
     }
 

@@ -24,14 +24,19 @@ function preventionSubmit() {
  * 하위 메뉴에 글씨 볼드와 밑줄 표시
  */
 function sidebarEvent() {
-    const currentPath = window.location.pathname;
+    // 현재 페이지 경로를 가져온 후 두 번째 '/' 전까지 추출
+    const currentPath = window.location.pathname.split('/').slice(0, 2).join('/');
 
     $(".nav-item").each(function () {
         const $navItem = $(this);
         const $parentLink = $navItem.children("a.nav-link");
         const $subMenu = $navItem.find(".collapse");
 
-        const $activeSubMenuItem = $subMenu.find(`a.nav-link[href='${currentPath}']`);
+        // 서브 메뉴 내에서 현재 경로의 시작 부분과 일치하는 항목을 찾음
+        const $activeSubMenuItem = $subMenu.find("a.nav-link").filter(function() {
+            const hrefPath = $(this).attr("href").split('/').slice(0, 2).join('/');  // href에서 두 번째 '/' 전까지 추출
+            return hrefPath && currentPath === hrefPath;  // 두 경로를 비교
+        });
 
         if ($activeSubMenuItem.length > 0) {
             $parentLink.addClass("active");
@@ -40,6 +45,7 @@ function sidebarEvent() {
         }
     });
 
+    // 아이콘 회전 이벤트 설정
     $(".nav-link[data-bs-toggle='collapse']").on("click", function () {
         const $icon = $(this).find(".bi-chevron-down");
 
@@ -50,6 +56,7 @@ function sidebarEvent() {
         }
     });
 }
+
 
 /**
  * Ajax 호출 함수(기본)
@@ -99,6 +106,37 @@ function ajaxCall(url, type, params, success, failure, async) {
         async: async,
         dataType: "json",
         contentType: "application/json",
+        success: function(response) {
+            if (typeof success === "function") {
+                success(response);
+            }
+        },
+        error: function(xhr, status, error) {
+            alert("시스템 에러가 발생했습니다");
+            console.log(xhr, status, error);
+            if (typeof failure === "function") {
+                failure(xhr, status, error);
+            }
+        },
+        beforeSend: function() {
+            onBlockUI("시스템 처리중입니다...");
+        },
+        complete: function() {
+            offBlockUI();
+        }
+    })
+}
+
+function ajaxFileCall(url, type, formData, success, failure, async) {
+    async = (typeof async === "undefined") ? true : async;
+
+    $.ajax({
+        url: url,
+        type: type,
+        data: formData,
+        async: async,
+        processData: false,
+        contentType: false,
         success: function(response) {
             if (typeof success === "function") {
                 success(response);

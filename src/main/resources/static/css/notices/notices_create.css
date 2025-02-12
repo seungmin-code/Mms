@@ -1,0 +1,28 @@
+
+.detail-title-text {
+    border-left: none;  /* 왼쪽 테두리 없애기 */
+    border-right: none; /* 오른쪽 테두리 없애기 */
+    border-top: 2px solid #ddd !important;
+    border-bottom: 2px solid #ddd !important;
+}
+
+.content-size {
+    height: 500px;
+}
+
+/* 강제로 덮어쓰는 방법 */
+th {
+    border-top: 2px solid #ddd !important;
+    border-bottom: 2px solid #ddd !important;
+    border-left: #ddd !important;
+    border-right: #ddd !important;
+    padding: 12px !important;
+    text-align: center !important;
+    background-color: #f8f9fa !important;
+    font-weight: bold !important;
+}
+
+#content {
+    height: 100%;
+    resize: none;
+}
