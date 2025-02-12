@@ -9,7 +9,7 @@ function searchData() {
         createTable(response.data);
         createChart(response.data);
     }
-    ajaxCall("/finedustalert/fetchApiCallData", "GET", params, success, "", "");
+    ajaxCall("/finedustalert/fetchApiCallData", "GET", params, success, "");
 }
 
 function getPreviousYears() {
