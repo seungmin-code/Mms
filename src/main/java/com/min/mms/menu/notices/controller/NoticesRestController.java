@@ -32,6 +32,8 @@ public class NoticesRestController {
     private static final String UPLOAD_DIR = "./files";
 
     private final NoticesService noticesService;
+
+    /* 공통 컴포넌트 */
     private final CommonComponent commonComponent;
 
     private static final Logger logger = LoggerFactory.getLogger(NoticesRestController.class);
