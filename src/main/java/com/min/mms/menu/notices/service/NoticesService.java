@@ -13,7 +13,7 @@ public interface NoticesService {
 
     void createNotices(Map<String, Object> request);
 
-    void patchNotices(String id, NoticesUpdateDTO request);
+    void patchNotices(String id, Map<String, Object> request);
 
     void deleteNotices(String id);
 

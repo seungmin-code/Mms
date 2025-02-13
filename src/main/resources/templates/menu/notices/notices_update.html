@@ -43,7 +43,13 @@
     <tr>
       <td class="text-center align-middle bg-light">첨부파일</td>
       <td colspan="5">
-        <input type="file" id="file_path" class="form-control" />
+        <div id="fileContainer">
+          <!-- 기존 파일이 있을 경우 파일명과 삭제 버튼을 보여줌 -->
+          <span id="existingFile"></span>
+          <button id="deleteFile" class="btn btn-danger ms-2" style="display:none;" onclick="deleteFile()">삭제</button>
+        </div>
+        <!-- 파일 업로드 필드 -->
+        <input type="file" id="fileInput" class="form-control mt-2" />
       </td>
     </tr>
     <tr>

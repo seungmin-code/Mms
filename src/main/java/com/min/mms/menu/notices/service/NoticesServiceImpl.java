@@ -32,7 +32,7 @@ public class NoticesServiceImpl implements NoticesService {
     }
 
     @Override
-    public void patchNotices(String id, NoticesUpdateDTO request) {
+    public void patchNotices(String id, Map<String, Object> request) {
         noticesMapper.patchNotices(id, request);
     }
 

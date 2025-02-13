@@ -34,6 +34,12 @@ function createTable(data) {
                 </tr>
             `;
         });
+    } else {
+        tableHtml += `
+                <tr>
+                  <td class='text-center' colspan="4">데이터가 없습니다</td>
+                </tr>
+            `;
     }
 
     tableBody.append(tableHtml);

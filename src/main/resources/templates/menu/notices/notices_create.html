@@ -5,9 +5,10 @@
       layout:decorate="~{common/layout}">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>공지사항</title>
-  <script src="/js/notices/notices_create.js"></script>
   <link rel="stylesheet" href="/css/notices/notices_create.css">
+  <script src="/js/notices/notices_create.js"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -27,15 +28,16 @@
     <thead>
     <tr class="detail-title">
       <td class="text-center align-middle bg-light">제목</td>
-      <th id="titleTh" class='detail-title-text text-center align-middle' colspan="5">
+      <th id="titleTh" class="detail-title-text text-center align-middle" colspan="5">
         <input type="text" id="title" class="form-control" />
+      </th>
     </tr>
     </thead>
     <tbody id="tableBody" class="side-border">
     <tr>
       <td class="text-center align-middle bg-light">첨부파일</td>
       <td colspan="5">
-        <input type="file" id="file" class="form-control" />
+        <input type="file" id="fileInput" name="file" />
       </td>
     </tr>
     <tr>
@@ -46,20 +48,19 @@
     </tr>
     </tbody>
   </table>
-  <!-- 버튼 그룹, 오른쪽 정렬 -->
+
+  <!-- 버튼 그룹 -->
   <div class="mt-4 d-flex justify-content-end">
-    <button class="btn btn-success me-1" onclick="createData()">
+    <button id="createBtn" class="btn btn-success me-1" onclick="createData()">
       <i class="bi bi-save"></i> 저장
     </button>
-    <!-- 목록으로 버튼 추가 -->
     <a href="/notices/select" class="btn btn-secondary ms-1">
       <i class="bi bi-list"></i> 목록으로
     </a>
   </div>
+
   <!-- 공지사항 아이디 -->
-  <label for="id">
-    <input id="id" th:value="${id}" hidden="hidden" />
-  </label>
+  <input id="id" th:value="${id}" type="hidden" />
 </div>
 </body>
 </html>

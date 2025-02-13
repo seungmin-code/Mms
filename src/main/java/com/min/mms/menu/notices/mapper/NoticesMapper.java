@@ -24,9 +24,9 @@ public interface NoticesMapper {
     void createNotices(Map<String, Object> request);
 
     @Update("UPDATE Mms.board_notices\n" +
-            "SET title=#{request.title}, content=#{request.content}, file_path=#{request.file_path}, update_by='임시', updated_at=current_timestamp()\n" +
+            "SET title=#{request.title}, content=#{request.content}, file_path=#{request.file_path}, file_name=#{request.file_name}, update_by='임시', updated_at=current_timestamp()\n" +
             "WHERE id=#{id}")
-    void patchNotices(String id, NoticesUpdateDTO request);
+    void patchNotices(String id, Map<String, Object> request);
 
     @Delete("DELETE FROM Mms.board_notices\n" +
             "WHERE id=#{id}")
