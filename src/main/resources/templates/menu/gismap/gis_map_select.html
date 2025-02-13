@@ -2,15 +2,19 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{common/layout}">
+      layout:decorate="~{common/layout_map}">
 <head>
     <meta charset="UTF-8">
     <title>GIS 지도</title>
+    <!-- JS -->
+    <script src="/js/gismap/gismap.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/gismap/gismap.css"></link>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2>GIS 지도</h2>
-    <p>GIS 기능을 테스트 할 수 있는 페이지</p>
+    <!-- 지도 DIV -->
+    <div id="map" class="map"></div>
 </div>
 </body>
 </html>
