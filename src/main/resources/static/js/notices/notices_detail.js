@@ -10,10 +10,33 @@ function searchData() {
         $("#create_by").text(data.create_by);
         $("#create_at").text(data.created_at);
         $("#update_at").text(data.updated_at);
-        $("#file_name").text(data.file_name);
+        $("#file_name").text(data.file_name ? data.file_name : '첨부파일 없음');
         $("#content").text(data.content);
+
+        // 파일이 존재할 경우 다운로드 버튼 추가
+        if (data.file_name) {
+            const fileName = data.file_name;
+            const fileLink = $("<span>")
+                .text(fileName)
+                .css({
+                    color: "blue",
+                    textDecoration: "underline",
+                    cursor: "pointer"
+                })
+                .on("click", function() {
+                    const encodedFileName = encodeURIComponent(fileName);
+                    location.href = "/notices/download/" + encodedFileName;
+                });
+            $("#file_name").html(fileLink);
+        }
     }
+
     ajaxCall("/notices/" + $("#id").val(), "GET", "", success, "", "");
+}
+
+// 파일 다운로드 함수
+function downloadFile(fileName) {
+    location.href = "/notices/download/" + encodeURIComponent(fileName);
 }
 
 function updatePage() {
@@ -29,8 +52,4 @@ function deleteData() {
         }
         ajaxCall(url, "DELETE", "", success, "", "");
     }
-}
-
-function saveData() {
-
 }

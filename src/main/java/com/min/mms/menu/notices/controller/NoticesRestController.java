@@ -6,6 +6,7 @@ import com.min.mms.common.component.CommonComponent;
 import com.min.mms.menu.notices.service.NoticesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,9 +28,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/notices")
 public class NoticesRestController {
+    /* 파일 기본 저장 경로 */
+    private static final String UPLOAD_DIR = "./files";
 
     private final NoticesService noticesService;
     private final CommonComponent commonComponent;
+
     private static final Logger logger = LoggerFactory.getLogger(NoticesRestController.class);
 
     public NoticesRestController(NoticesService noticesService, CommonComponent commonComponent) {
@@ -98,27 +103,28 @@ public class NoticesRestController {
         // 파일 경로 및 파일명 초기화
         String filePath = null;
         String fileName = null;
+        String fileExtension = null;  // 확장자 저장용 변수
 
         if (file != null && !file.isEmpty()) {
             // 파일 이름 추출 및 확장자 확인
             String originalFileName = file.getOriginalFilename();
-            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
             // 현재 시간을 기준으로 파일명 생성
             String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            fileName = originalFileName.substring(0, originalFileName.lastIndexOf(".")) + "_" + timestamp;
+            fileName = originalFileName.substring(0, originalFileName.lastIndexOf(".")) + "_" + timestamp + fileExtension;
 
             // 중복된 파일명이 있으면 변경
-            File uploadedFile = new File(uploadDir + File.separator + fileName + extension);
+            File uploadedFile = new File(uploadDir + File.separator + fileName);
             int count = 1;
             while (uploadedFile.exists()) {
-                fileName = fileName + "(" + count + ")";
-                uploadedFile = new File(uploadDir + File.separator + fileName + extension);
+                fileName = fileName.substring(0, fileName.lastIndexOf("_")) + "_" + count + fileExtension;
+                uploadedFile = new File(uploadDir + File.separator + fileName);
                 count++;
             }
 
             // 최종 파일 경로 설정
-            filePath = uploadDir + File.separator + fileName + extension;
+            filePath = uploadDir + File.separator + fileName;
 
             // 파일 저장
             Path path = Path.of(filePath);
@@ -140,6 +146,7 @@ public class NoticesRestController {
         response.put("message", "공지사항이 성공적으로 생성되었습니다.");
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     /**
      * 공지사항 일부 수정
@@ -177,9 +184,10 @@ public class NoticesRestController {
             if (existingFilePath != null && !existingFilePath.isEmpty()) {
                 File existingFile = new File(existingFilePath);
                 if (existingFile.exists()) {
-                    existingFile.delete();
+                    existingFile.delete();  // 기존 파일 삭제
                 }
             }
+            // 기존 파일 정보 초기화
             existingFileName = null;
             existingFilePath = null;
         }
@@ -187,31 +195,38 @@ public class NoticesRestController {
         // 새로운 파일 저장을 위한 변수 설정
         String filePath = existingFilePath;
         String fileName = existingFileName;
+        String fileExtension = null;
 
         if (file != null && !file.isEmpty()) {
-            // 파일 이름 및 경로 처리 (위와 동일)
+            // 파일 이름 추출 및 확장자 확인
             String originalFileName = file.getOriginalFilename();
-            String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            fileName = originalFileName.substring(0, originalFileName.lastIndexOf(".")) + "_" + timestamp;
+            fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
-            File uploadedFile = new File(uploadDir + File.separator + fileName + extension);
+            // 현재 시간을 기준으로 파일명 생성
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            fileName = originalFileName.substring(0, originalFileName.lastIndexOf(".")) + "_" + timestamp + fileExtension;
+
+            // 중복된 파일명이 있으면 변경
+            File uploadedFile = new File(uploadDir + File.separator + fileName);
             int count = 1;
             while (uploadedFile.exists()) {
-                fileName = fileName + "(" + count + ")";
-                uploadedFile = new File(uploadDir + File.separator + fileName + extension);
+                fileName = fileName.substring(0, fileName.lastIndexOf("_")) + "_" + count + fileExtension;
+                uploadedFile = new File(uploadDir + File.separator + fileName);
                 count++;
             }
 
-            filePath = uploadDir + File.separator + fileName + extension;
+            // 최종 파일 경로 설정
+            filePath = uploadDir + File.separator + fileName;
+
+            // 파일 저장
             Path path = Path.of(filePath);
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-            // 기존 파일 삭제
+            // 기존 파일 삭제 (새 파일이 업로드 된 경우)
             if (existingFilePath != null && !existingFilePath.equals(filePath)) {
                 File existingFile = new File(existingFilePath);
                 if (existingFile.exists()) {
-                    existingFile.delete();
+                    existingFile.delete();  // 기존 파일 삭제
                 }
             }
         }
@@ -220,8 +235,8 @@ public class NoticesRestController {
         Map<String, Object> request = new HashMap<>();
         request.put("title", title);
         request.put("content", content);
-        request.put("file_name", fileName);
-        request.put("file_path", filePath);
+        request.put("file_name", fileName);  // 파일명
+        request.put("file_path", filePath);  // 파일 경로
 
         // 공지사항 수정 서비스 호출
         noticesService.patchNotices(id, request);
@@ -231,6 +246,8 @@ public class NoticesRestController {
         response.put("message", "공지사항이 성공적으로 수정되었습니다.");
         return ResponseEntity.ok(response);
     }
+
+
 
     /**
      * 공지사항 삭제
@@ -243,5 +260,43 @@ public class NoticesRestController {
         noticesService.deleteNotices(id);
         response.put("message", "공지사항이 성공적으로 삭제되었습니다.");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    /**
+     * 파일 다운로드 기능
+     * @param fileName 다운로드할 파일의 이름
+     * @return 파일 다운로드 응답
+     */
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) throws IOException {
+        // 파일 경로 설정
+        Path filePath = Paths.get(UPLOAD_DIR, fileName);
+
+        // 파일이 존재하는지 확인
+        File file = filePath.toFile();
+        if (!file.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null); // 파일이 없으면 404 응답
+        }
+
+        // 파일을 byte[]로 읽기
+        byte[] fileBytes = Files.readAllBytes(filePath);
+
+        // 파일의 MIME 타입 추정
+        String mimeType = Files.probeContentType(filePath);
+        if (mimeType == null) {
+            mimeType = "application/octet-stream"; // 기본 MIME 타입 설정
+        }
+
+        // 파일명 인코딩 처리
+        String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+
+        // 응답 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFileName);
+        headers.add(HttpHeaders.CONTENT_TYPE, mimeType);
+        headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()));
+
+        return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
     }
 }
