@@ -52,33 +52,3 @@ function createPage() {
 function detailPage(id) {
     window.location.href = "/notices/detail/" + id;
 }
-
-
-
-function createData() {
-    const params = {title: "title", content: "content", create_by: "seungmin"};
-    const success = function(response) {
-        console.log(response);
-    }
-
-    ajaxCall("/notices", "POST", JSON.stringify(params), success, "", "");
-}
-
-function searchDetailData() {
-    const success = function(response) {
-        console.log(response);
-    }
-
-    ajaxCall("/notices/1", "GET", "", success, "", "");
-}
-
-function patchData() {
-    const params = {title: "updated title", content: "updated content"};
-    const success = function(response) {
-        console.log(response);
-    }
-
-    ajaxCall("/notices/1", "PATCH", JSON.stringify(params), success, "", "");
-}
-
-

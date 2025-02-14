@@ -10,11 +10,19 @@ function createData() {
         formData.append("content", $("#content").val());
 
         let file = $("#fileInput")[0];
+
         if (file.files.length > 0) {
+            let fileSize = file.files[0].size;
+
+            if (fileSize === 0) {
+                alert("파일 크기가 0입니다. 파일을 확인해주세요.");
+                $("#fileInput").val("");
+                return;
+            }
+
             formData.append("file", file.files[0]);
         }
 
         ajaxFileCall("/notices", "POST", formData, success, "");
     }
-
 }
