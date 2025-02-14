@@ -160,6 +160,9 @@ public class CommonComponent {
         String apiUrl = buildApiUrl(parameters);
         logger.info("API 호출 : {}", apiUrl);
 
+        ResponseEntity<String> stringResponse = restTemplate.getForEntity(URI.create(apiUrl), String.class);
+        logger.info("문자열 API 응답 : {}", stringResponse.getBody());
+
         ResponseEntity<JsonNode> apiCallResponse = restTemplate.getForEntity(URI.create(apiUrl), JsonNode.class);
         logger.info("API 응답 : {}", apiCallResponse.getBody());
 

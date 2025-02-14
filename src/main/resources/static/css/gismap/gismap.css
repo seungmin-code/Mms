@@ -22,3 +22,22 @@ body, html {
 .main-content {
     height: 100vh;
 }
+
+.offcanvas {
+    margin-top : 56px;
+}
+
+
+.offcanvas-header {
+    background-color: #007bff;
+    color: white;
+
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.offcanvas-header h5 {
+    margin: 0;
+    line-height: 1.2;
+}

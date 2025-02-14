@@ -15,6 +15,53 @@
 <div layout:fragment="content">
     <!-- 지도 DIV -->
     <div id="map" class="map"></div>
+
+    <!-- 측정소정보 사이드바 -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">측정소 정보</h5>
+            <button type="button" class="btn-close text-reset" onclick="closeSideBar()"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="station-info">
+                <table class="table table-hover">
+                    <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 75%;">
+                    </colgroup>
+                    <thead class="table-light">
+                    <tr>
+                        <th>항목</th>
+                        <th>내용</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>측정소</strong></td>
+                        <td><span id="station_name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>측정망</strong></td>
+                        <td><span id="mang_name"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>설치연도</strong></td>
+                        <td><span id="year"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>측정항목</strong></td>
+                        <td><span id="item"></span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>측정소주소</strong></td>
+                        <td><span id="addr"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>
