@@ -15,6 +15,81 @@ function searchStationData() {
     ajaxCall("/gismap", "GET", "", success, "", "");
 }
 
+function realTimeDayData(msrstnName) {
+    console.log("관측소명 : " + msrstnName);
+
+    const params = {
+        msrstnName: msrstnName,
+        inqBginMm: getYYYYmmddNDaysAgo(7),
+        inqEndMm: getYYYYmmdd()
+    }
+
+    const success = function(response) {
+        createChart(response.data, "pm10");
+        createChart(response.data, "pm25");
+    }
+
+    ajaxCallNoBlock("/realTimeDay/fetchApiCallData", "GET", params, success, "", "true");
+}
+
+function createChart(data, category) {
+    if (data.length > 0) {
+        const dataName = category + "Value";
+        const chartName = category + "Chart";
+
+        let title = "";
+        if (category === "pm10") {
+            title = "미세먼지";
+        } else {
+            title = "초미세먼지";
+        }
+
+        const dates = data.map(item => item.msurDt);
+        const values = data.map(item => item[dataName] !== null ? parseFloat(item[dataName]) : 0);
+
+        const chartContainer = document.getElementById(chartName);
+        const chart = echarts.init(chartContainer);
+
+        const option = {
+            title: {
+                text: `${title} 농도 데이터`,
+                left: 'left'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'category',
+                data: dates,
+                axisLabel: {
+                    rotate: 45,
+                    interval: 0,
+                    formatter: function (value) {
+                        return value;
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: `농도 (µg/m³)`
+            },
+            series: [{
+                data: values,
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    color: '#5470c6'
+                }
+            }]
+        };
+
+        chart.setOption(option);
+    } else {
+        console.error("데이터가 비어 있습니다.");
+    }
+}
+
+
 function createBackGroundMap() {
     clusterSource = new ol.source.Cluster({
         distance: 50,
@@ -44,7 +119,7 @@ function clusterStyleFunction(feature) {
     let color = 'rgba(13, 110, 253, 0.8)';
 
     if (selectedCluster && feature === selectedCluster) {
-        color = 'rgba(255, 0, 0, 0.8)'; // 변경된 부분
+        color = 'rgba(255, 0, 0, 0.8)';
     }
 
     return new ol.style.Style({
@@ -146,7 +221,7 @@ function markerOnClickEvent() {
                         })
                     }));
 
-                    selectedCluster = feature; // 변경된 부분
+                    selectedCluster = feature;
                 }
 
                 const station_name = markerFeature.get("station_name");
@@ -154,6 +229,9 @@ function markerOnClickEvent() {
                 const item = markerFeature.get("item");
                 const year = markerFeature.get("year");
                 const mang_name = markerFeature.get("mang_name");
+
+                // 미세먼지 일평균 데이터 조회 및 차트생성
+                realTimeDayData(station_name);
 
                 openSideBar(station_name, addr, item, year, mang_name);
             } else {

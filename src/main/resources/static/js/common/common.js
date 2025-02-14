@@ -8,17 +8,6 @@ $(function () {
 });
 
 /**
- * 엔터클릭하여 폼 제출되는 현상 방지
- */
-function preventionSubmit() {
-    $("#searchForm").on("keydown", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-        }
-    });
-}
-
-/**
  * 사이드바 선택 시 발생 이벤트
  * 대메뉴에 음영표시
  * 하위 메뉴에 글씨 볼드와 밑줄 표시
@@ -57,6 +46,16 @@ function sidebarEvent() {
     });
 }
 
+/**
+ * 엔터클릭하여 폼 제출되는 현상 방지
+ */
+function preventionSubmit() {
+    $("#searchForm").on("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    });
+}
 
 /**
  * Ajax 호출 함수(기본)
@@ -127,6 +126,15 @@ function ajaxCall(url, type, params, success, failure, async) {
     })
 }
 
+/**
+ * Ajax 호출 함수(로딩블록과 파일처리를 위한 코드 포함)
+ * @param url 호출 할 URL
+ * @param type 데이터타입(GET, POST 등..)
+ * @param formData 데이터 파라미터(파일포함)
+ * @param success 호출 성공 시 실행 할 함수
+ * @param failure 호출 실패 시 실행 할 함수
+ * @param async 비동기 동기 여부
+ */
 function ajaxFileCall(url, type, formData, success, failure, async) {
     async = (typeof async === "undefined") ? true : async;
 
@@ -163,12 +171,10 @@ function ajaxFileCall(url, type, formData, success, failure, async) {
  * @param message 로딩블록에 표시 될 메시지
  */
 function onBlockUI(message) {
-    // 메시지 없으면 기본 메시지 적용
     if (message === undefined) {
         message = "시스템 처리중입니다..."
     }
 
-    // 블록 UI 디자인
     $.blockUI({
         message: message,
         css : {
@@ -281,16 +287,16 @@ function createPagination(pagination) {
 function flatPickerSetting(dateType) {
     const today = new Date();
     const todayString = today.toISOString().split("T")[0].slice(0, 7);
-    const todayDayString = today.toISOString().split("T")[0];  // 일 단위 포맷
+    const todayDayString = today.toISOString().split("T")[0];
 
     // 한 달 전 날짜 계산
     const oneMonthAgo = new Date(today);
-    oneMonthAgo.setMonth(today.getMonth() - 1);  // 한 달 전으로 설정
+    oneMonthAgo.setMonth(today.getMonth() - 1);
     const oneMonthAgoString = oneMonthAgo.toISOString().split("T")[0];
 
     // 6개월 전 날짜 계산
     const sixMonthsAgo = new Date(today);
-    sixMonthsAgo.setMonth(today.getMonth() - 6);  // 6개월 전으로 설정
+    sixMonthsAgo.setMonth(today.getMonth() - 6);
     const sixMonthsAgoString = sixMonthsAgo.toISOString().split("T")[0];
 
     const flatpickrOptions = {
@@ -301,11 +307,11 @@ function flatPickerSetting(dateType) {
     if (dateType === "month") {
         const monthOptions = {
             ...flatpickrOptions,
-            dateFormat: "Y-m",  // 월 단위 포맷
+            dateFormat: "Y-m",
             mode: "single",
             plugins: [new monthSelectPlugin({ dateFormat: "Y-m" })],
             minDate: sixMonthsAgoString,
-            defaultDate: sixMonthsAgoString.slice(0, 7)  // 6개월 전 날짜를 디폴트로 설정
+            defaultDate: sixMonthsAgoString.slice(0, 7)
         };
 
         flatpickr("#startDate", monthOptions);
@@ -318,10 +324,10 @@ function flatPickerSetting(dateType) {
     if (dateType === "day") {
         const dayOptions = {
             ...flatpickrOptions,
-            dateFormat: "Y-m-d",  // 일 단위 포맷
+            dateFormat: "Y-m-d",
             mode: "single",
             minDate: sixMonthsAgoString,
-            defaultDate: oneMonthAgoString  // 한 달 전 날짜를 디폴트로 설정
+            defaultDate: oneMonthAgoString
         };
 
         flatpickr("#startDate", dayOptions);
@@ -330,6 +336,38 @@ function flatPickerSetting(dateType) {
             defaultDate: todayDayString
         });
     }
+}
+
+/**
+ * 현재 날짜를 YYYYMMDD 형식의 문자열로 반환하는 함수
+ * @returns {string} 현재 날짜 (YYYYMMDD 형식)
+ */
+function getYYYYmmdd() {
+    const today = new Date();
+    return formatDate(today);
+}
+
+/**
+ * n일 전의 날짜를 YYYYMMDD 형식의 문자열로 반환하는 함수
+ * @param {number} n - 가져올 날짜의 일 수
+ * @returns {string} n일 전의 날짜 (YYYYMMDD 형식)
+ */
+function getYYYYmmddNDaysAgo(n) {
+    const date = new Date();
+    date.setDate(date.getDate() - n); // n일 전 날짜로 설정
+    return formatDate(date);
+}
+
+/**
+ * 날짜 객체를 YYYYMMDD 형식의 문자열로 반환하는 함수
+ * @param {Date} date - 날짜 객체
+ * @returns {string} 날짜 (YYYYMMDD 형식)
+ */
+function formatDate(date) {
+    const year = String(date.getFullYear());
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return year + month + day;
 }
 
 
