@@ -9,10 +9,13 @@
                 <i class="bi bi-cloud"></i> MMS
             </a>
             <!-- 메뉴 (항상 가로로 보이도록 설정) -->
-            <ul class="navbar-nav d-flex flex-row">
-                <li class="nav-item mx-2"><a class="nav-link text-white" href="/admin">관리자</a></li>
-                <li class="nav-item mx-2"><a class="nav-link text-white" href="/login">로그인</a></li>
-                <li class="nav-item mx-2"><a class="nav-link text-white" href="/logout">로그아웃</a></li>
+            <ul class="navbar-nav ms-auto">
+                <li id="loginLi" class="nav-item mx-2">
+                    <a class="nav-link text-white" href="/security/loginForm">로그인</a>
+                </li>
+                <li id="logoutLi" class="nav-item mx-2">
+                    <a class="nav-link text-white" href="/logout" onclick="return confirm('로그아웃 하시겠습니까?')">로그아웃</a>
+                </li>
             </ul>
         </div>
     </nav>

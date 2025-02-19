@@ -5,7 +5,37 @@
 $(function () {
     sidebarEvent();
     preventionSubmit();
+    roleCheck();
 });
+
+function roleCheck() {
+    const success = function(roles) {
+        const userRoles = roles.map(role => role.authority);
+
+        console.log(userRoles[0]);
+
+        // ROLE_ANONYMOUS
+        if (userRoles[0] === 'ROLE_ANONYMOUS') {
+            $('#loginLi').show();
+            $('#logoutLi').hide();
+            $('#admin').hide();
+        } else {
+            // ROLE_ADMIN
+            if (userRoles.includes('ROLE_ADMIN')) {
+                $('#logoutLi').show();
+                $('#loginLi').hide();
+            }
+
+            // ROLE_USER
+            if (userRoles.includes('ROLE_USER')) {
+                $('#logoutLi').show();
+                $('#loginLi').hide();
+            }
+        }
+    }
+
+    ajaxCallNoBlock("/security/roles", "GET", "", success, "");
+}
 
 /**
  * 사이드바 선택 시 발생 이벤트
