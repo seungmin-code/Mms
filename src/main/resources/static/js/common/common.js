@@ -141,10 +141,11 @@ function ajaxCall(url, type, params, success, failure, async) {
             }
         },
         error: function(xhr, status, error) {
-            alert("시스템 에러가 발생했습니다");
-            console.log(xhr, status, error);
             if (typeof failure === "function") {
                 failure(xhr, status, error);
+            } else {
+                alert("시스템 에러가 발생했습니다");
+                console.log(xhr, status, error);
             }
         },
         beforeSend: function() {
