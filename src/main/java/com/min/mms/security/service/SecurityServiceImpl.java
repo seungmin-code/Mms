@@ -44,4 +44,25 @@ public class SecurityServiceImpl implements SecurityService {
     public String findUsernameByEmail(String email) {
         return securityMapper.findUsernameByEmail(email);
     }
+
+    @Override
+    public String findEmailByUsername(String username) {
+        return securityMapper.findEmailByUsername(username);
+    }
+
+    @Override
+    public void generateFindCode(String code, String username) {
+        securityMapper.generateFindCode(code, username);
+    }
+
+    @Override
+    public String verifyCode(String username) {
+        return securityMapper.verifyCode(username);
+    }
+
+    @Override
+    public void updatePassword(String username, String password) {
+        password = passwordEncoder.encode(password);
+        securityMapper.updatePassword(username, password);
+    }
 }

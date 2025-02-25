@@ -102,6 +102,7 @@ function ajaxCallNoBlock(url, type, params, success, failure) {
         data: params,
         async: true,
         dataType: "json",
+        contentType: "application/json",
         success: function(response) {
             if (typeof success === "function") {
                 success(response);

@@ -5,6 +5,7 @@ import com.min.mms.security.model.UserSignUpDTO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface SecurityMapper {
@@ -28,4 +29,24 @@ public interface SecurityMapper {
             "FROM Mms.common_user\n" +
             "WHERE email = #{email}")
     String findUsernameByEmail(String email);
+
+    @Select("SELECT email\n" +
+            "FROM common_user\n" +
+            "WHERE username = #{username}")
+    String findEmailByUsername(String username);
+
+    @Update("UPDATE Mms.common_user\n" +
+            "SET find_code=#{code}\n" +
+            "WHERE username=#{username};")
+    void generateFindCode(String code, String username);
+
+    @Select("SELECT find_code\n" +
+            "FROM Mms.common_user\n" +
+            "WHERE username = #{username}")
+    String verifyCode(String username);
+
+    @Update("UPDATE Mms.common_user\n" +
+            "SET password=#{password}\n" +
+            "WHERE username=#{username};")
+    void updatePassword(String username, String password);
 }

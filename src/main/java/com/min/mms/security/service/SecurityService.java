@@ -12,4 +12,12 @@ public interface SecurityService {
 
     String findUsernameByEmail(String email);
 
+    String findEmailByUsername(String username);
+
+    void generateFindCode(String code, String username);
+
+    String verifyCode(String username);
+
+    void updatePassword(String username, String password);
+
 }
