@@ -4,9 +4,9 @@
 측정소정보
 ![image](https://github.com/user-attachments/assets/62d8c1fe-bb57-47c1-8b3d-990db1b7d405)
 GIS기능
-![image](https://github.com/user-attachments/assets/8ae78f95-a43e-492d-b9e5-d66ecfc9b214)
+![image](https://github.com/user-attachments/assets/88fe85d7-5078-4dad-91fe-21015c9f59bc)
 공지사항 등록기능
-![image](https://github.com/user-attachments/assets/41d25e12-2666-43c7-824a-7a97de8c65b7)
+![image](https://github.com/user-attachments/assets/cc5c9174-3b13-4e08-ae2c-152516a0aeeb)
 측정항목 별 평균데이터
 ![image](https://github.com/user-attachments/assets/8404c3d5-d398-458b-a6cf-83e776b1fc9e)
 경보발령 현황
