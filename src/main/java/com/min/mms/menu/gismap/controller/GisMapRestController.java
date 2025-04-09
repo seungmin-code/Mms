@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * GIS 구성을 위해 측정소 데이터를 제공하기 위한 컨트롤러
+ */
 @RestController
 @RequestMapping("/gismap")
 public class GisMapRestController {
@@ -20,6 +23,10 @@ public class GisMapRestController {
         this.gisMapService = gisMapService;
     }
 
+    /**
+     * 측정소 좌표데이터를 가져오는 메소드
+     * @return 반환 결과
+     */
     @GetMapping
     public ResponseEntity<Map<String, Object>> stationMarkerData() {
         Map<String, Object> response = new HashMap<>();

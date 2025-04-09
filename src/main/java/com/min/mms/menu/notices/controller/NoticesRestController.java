@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 공지사항 관련 API를 제공하기 위한 컨트롤러
+ */
 @RestController
 @RequestMapping("/notices")
 public class NoticesRestController {

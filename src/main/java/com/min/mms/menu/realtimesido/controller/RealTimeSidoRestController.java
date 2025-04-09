@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * 미세먼지 실시간 평균 시도별 API를 제공하는 컨트롤러
+ */
 @RestController
 @RequestMapping("/realTimeSido")
 public class RealTimeSidoRestController {

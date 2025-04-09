@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 미세먼지 경보이력 API를 제공하는 컨트롤러
+ */
 @RestController
 @RequestMapping("/finedustalert")
 public class FineDustAlertRestController {
@@ -30,6 +33,11 @@ public class FineDustAlertRestController {
         this.commonComponent = commonComponent;
     }
 
+    /**
+     * 공공데이터포털에서 미세먼지 경보이력을 가져오는 메소드
+     * @param year 조회년도
+     * @return 반환결과
+     */
     @GetMapping("fetchApiCallData")
     public ResponseEntity<Map<String, Object>> fetchApiCallData(@RequestParam String year) {
         Map<String, Object> response = new HashMap<>();

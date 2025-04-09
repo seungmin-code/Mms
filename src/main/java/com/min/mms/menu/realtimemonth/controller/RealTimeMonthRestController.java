@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 측정소별 월평균 데이터 API를 제공하는 컨트롤러
+ */
 @RestController
 @RequestMapping("/realTimeMonth")
 public class RealTimeMonthRestController {
@@ -35,6 +38,13 @@ public class RealTimeMonthRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(RealTimeMonthRestController.class);
 
+    /**
+     * 
+     * @param inqBginMm 조회시작일자
+     * @param inqEndMm 조회종료일자
+     * @param msrstnName 관측소명
+     * @return 반환결과
+     */
     @GetMapping("fetchApiCallData")
     public ResponseEntity<Map<String, Object>> fetchApiCallData(
             @RequestParam String inqBginMm,
