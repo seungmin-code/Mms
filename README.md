@@ -10,4 +10,5 @@ GIS기능
 측정항목 별 평균데이터
 ![image](https://github.com/user-attachments/assets/8404c3d5-d398-458b-a6cf-83e776b1fc9e)
 경보발령 현황
-![image](https://github.com/user-attachments/assets/114d969f-33de-4876-b578-6087b34999cb)
+![image](https://github.com/user-attachments/assets/502aad58-5405-42ea-8ae5-922f164a40e9)
+
